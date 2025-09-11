@@ -1,0 +1,646 @@
+/* Impor Bootstrap yang diinstal manual */
+@import url('bootstrap.min.css');
+
+/* CSS Kustom untuk El-Fitra Website */
+body {
+    background-color: #ffffff;
+    font-family: Calibri, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.navbar {
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-bottom: 2px solid #28a745;
+    max-width: 1350px; /* Menyamakan dengan image slider */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1.5rem;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #28a745 !important;
+}
+
+.carousel {
+    border-radius: 0;
+    overflow: hidden;
+    max-width: 1350px; /* Menyamakan dengan navbar */
+    width: 100%;
+    margin: 0 auto;
+}
+
+#imageSlider {
+    height: 80vh;
+    min-height: 400px; /* Mencegah layout shift */
+}
+
+#imageSlider img {
+    object-fit: cover;
+    height: 80vh;
+    width: 100%; /* Menggunakan lebar penuh container */
+    min-height: 400px;
+}
+
+.slider-text-fixed {
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    white-space: nowrap;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+    border: 2px solid #28a745;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.card-text {
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+.vision-mission-card {
+    border-radius: 10px;
+    padding: 0.5rem;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border: 2px solid #28a745;
+}
+
+.vision-mission-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.jenjang-card {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 150px;
+    width: 250px;
+    padding: 5px;
+    background: url('/images/get.jpeg') no-repeat center center;
+    background-size: cover;
+    border: 2px solid #000000;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px #000000;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.jenjang-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.jenjang-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(40, 167, 69, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.jenjang-card:hover .overlay {
+    opacity: 1;
+}
+
+.jenjang-card i {
+    font-size: 2.5rem;
+}
+
+/* Menghapus margin-left spesifik untuk responsivitas */
+.jenjang-card.sma,
+.jenjang-card.tk,
+.jenjang-card.sd,
+.jenjang-card.smp {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.statistik-box {
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0.3rem auto; /* Memusatkan */
+    text-align: center;
+    border: 2px solid #28a745;
+    height: 150px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.2s;
+    background-color: #ffffff;
+}
+
+/* Menghapus margin-left spesifik untuk responsivitas */
+.statistik-box.tk,
+.statistik-box.sd,
+.statistik-box.smp,
+.statistik-box.sma {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.stat-title {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.stat-jenjang {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.stat-number {
+    margin: 0.2rem 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #28a745;
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.stat-label {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #000000;
+}
+
+.statistik-box:hover {
+    transform: scale(1.05);
+}
+
+.news-container {
+    position: relative;
+    padding: 0 40px;
+    max-width: 1350px; /* Menyamakan dengan navbar dan slider */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.news-wrapper {
+    display: block;
+}
+
+.news-group {
+    display: none;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.news-group.active {
+    display: flex;
+}
+
+.news-item {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    min-height: 300px;
+    flex: 0 0 32%;
+    margin-right: 1%;
+}
+
+.news-item:hover {
+    transform: scale(1.02);
+}
+
+.news-item img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-item h5 {
+    color: #000000;
+    font-weight: bold;
+}
+
+.news-item p {
+    color: #000000;
+}
+
+.news-prev, .news-next {
+    z-index: 10;
+    display: block;
+    background-color: #28a745;
+    border-color: #28a745;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%; /* Membuat tombol bulat */
+    padding: 10px;
+}
+
+.news-prev {
+    left: 10px;
+}
+
+.news-next {
+    right: 10px;
+}
+
+.news-prev .carousel-control-prev-icon,
+.news-next .carousel-control-next-icon {
+    filter: invert(0);
+}
+
+.news-pagination .page-number {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid #28a745;
+    border-radius: 50%;
+    color: #28a745;
+    background-color: transparent;
+}
+
+.news-pagination .page-number.active {
+    background-color: #000000;
+    color: #28a745;
+    border-color: #000000;
+}
+
+.registration-image {
+    height: 200px;
+    position: relative;
+    max-width: 1350px; /* Menyamakan dengan navbar dan slider */
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: url('/images/ok.jpeg') no-repeat center center;
+    background-size: cover;
+}
+
+.registration-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.content-section {
+    margin-bottom: 3rem; /* Jarak antar bagian */
+}
+
+.footer {
+    background: linear-gradient(to right, #ffffff, #28a745);
+    color: #333;
+    padding: 2rem 0;
+    max-width: 1350px; /* Menyamakan dengan navbar dan slider */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.footer a {
+    color: #333;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+
+/* Animasi Scroll */
+.animate__animated {
+    opacity: 0;
+}
+
+.animate__fadeInUp {
+    animation: fadeInUp 1s ease-in-out forwards;
+}
+
+.animate__fadeInLeft {
+    animation: fadeInLeft 1s ease-in-out forwards;
+}
+
+.animate__fadeInRight {
+    animation: fadeInRight 1s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animasi Angka Statistik */
+.stat-number {
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+}
+
+.stat-number.animated {
+    opacity: 1;
+}
+
+/* Login Page Styles */
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+#password {
+    padding-right: 40px;
+}
+
+/* Tentang Kami Section */
+.tentang-kami-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 300px;
+    max-width: 1350px; /* Menyamakan dengan navbar dan slider */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    margin-top: 20px;
+}
+
+.tentang-kami-image {
+    height: 450px;
+    width: 100%;
+    max-width: 450px;
+    object-fit: cover;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.tentang-kami-title {
+    color: #000000;
+    font-size: 1.9rem;
+    margin: 0 0 10px 20px;
+}
+
+.tentang-kami-text {
+    color: #000000;
+    font-size: 1.2rem;
+    margin: 0 0 0 20px;
+    margin-bottom: 120px;
+}
+
+/* Fasilitas Section */
+.fasilitas-card {
+    position: relative;
+    background-image: url('/images/ok.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #000000;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1350px; /* Menyamakan dengan navbar dan slider */
+    width: 100%;
+    height: 270px;
+    margin: 0 auto;
+}
+
+/* Overlay untuk keterbacaan teks */
+.fasilitas-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.fasilitas-card .col-md-12 {
+    position: relative;
+    z-index: 2;
+}
+
+.fasilitas-card h2 {
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.fasilitas-card i {
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.fasilitas-card p {
+    color: #000000;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Tambahkan di app.css */
+.login-container {
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+}
+
+.login-slider-container {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-slider-image {
+    height: 100%;
+    object-fit: cover;
+    margin-left: 70px;
+    margin-top: 100px;
+}
+
+.login-form-container {
+    background-color: #ffffff;
+}
+
+.login-form {
+    max-width: 400px;
+}
+
+.login-logo {
+    max-height: 100px;
+}
+
+.login-input {
+    border: 1px solid #28a745;
+}
+
+.login-input#password {
+    padding-right: 40px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 55%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #28a745;
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        max-width: 100%;
+    }
+    #imageSlider {
+        height: 50vh;
+        min-height: 300px;
+        max-width: 100%;
+    }
+    #imageSlider img {
+        height: 50vh;
+        min-height: 300px;
+        width: 100%;
+    }
+    .slider-text-fixed {
+        font-size: 2.5rem;
+    }
+    .card {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        width: 100%;
+        margin-left: 0;
+    }
+    .card img {
+        margin-left: 0;
+    }
+    .jenjang-card, .statistik-box {
+        height: 120px;
+        width: 200px;
+        margin: 0.3rem auto;
+    }
+    .news-container {
+        max-width: 100%;
+    }
+    .news-item {
+        flex: 0 0 48%;
+        margin-right: 2%;
+    }
+    .jenjang-card i {
+        font-size: 2rem;
+    }
+    .stat-title {
+        font-size: 0.8rem;
+    }
+    .stat-number {
+        font-size: 0.9rem;
+    }
+    .stat-label {
+        font-size: 0.7rem;
+    }
+    .tentang-kami-container {
+        flex-direction: column;
+        height: auto;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    .tentang-kami-image {
+        height: 200px;
+        max-width: 100%;
+        margin: 0 auto 10px;
+    }
+    .tentang-kami-title, .tentang-kami-text {
+        margin: 0;
+        text-align: center;
+    }
+    .tentang-kami-text {
+        margin-bottom: 20px;
+    }
+    .fasilitas-card {
+        height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+    .fasilitas-card i {
+        font-size: 2rem;
+    }
+    .fasilitas-card p {
+        font-size: 0.8rem;
+    }
+    .registration-image {
+        max-width: 100%;
+    }
+    .footer {
+        max-width: 100%;
+    }
+}

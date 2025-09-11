@@ -1,0 +1,47 @@
+body {
+    background: linear-gradient(to bottom, #ffffff, #e6f4e6);
+    font-family: Calibri, sans-serif;
+}
+
+.visi-misi-circle {
+    background-color: #d4edda;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.statistik-box {
+    background-color: #d4edda;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.footer {
+    background-color: #d4edda;
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#imageSlider {
+    height: 400px;
+    overflow: hidden;
+}
+
+#imageSlider img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
