@@ -2,151 +2,141 @@
 
 @section('content')
     <div class="container-fluid p-0">
-        <div id="tkSlider" class="carousel slide carousel-fade slider-container" data-bs-ride="carousel" data-bs-interval="3000">
+        <div id="imageSlider" class="carousel slide carousel-fade slider-container" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{{ asset('images/tk1.jpeg') }}" class="d-block w-100" alt="TK Slider 1" loading="lazy">
-                    <div class="carousel-caption">
-                        <h1>TK EL-FITRA</h1>
+                    <img src="{{ asset('images/tk1.jpg') }}" class="d-block" alt="{{ __('messages.slider_1') }}" loading="lazy">
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <h1 class="slider-text-fixed">TK EL-FITRA</h1>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{{ asset('images/tk2.jpeg') }}" class="d-block w-100" alt="TK Slider 2" loading="lazy">
-                    <div class="carousel-caption">
-                        <h1>TK EL-FITRA</h1>
+                    <img src="{{ asset('images/tk2.jpg') }}" class="d-block" alt="{{ __('messages.slider_2') }}" loading="lazy">
+                    <div class="position-absolute top-50 start-50 translate-middle text-center">
+                        <h1 class="slider-text-fixed">TK EL-FITRA</h1>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#tkSlider" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="visually-hidden">{{ __('messages.previous') }}</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#tkSlider" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#imageSlider" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="visually-hidden">{{ __('messages.next') }}</span>
             </button>
         </div>
 
-        <!-- Content -->
-        <div class="container content-container">
+        <div class="content-container">
             <!-- History -->
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
                     <div class="history-section">
-                        <img src="{{ asset('images/el.jpeg') }}" alt="Sejarah Kami" loading="lazy">
+                        <img src="{{ asset('images/el.jpeg') }}" alt="{{ __('messages.about_us') }}" loading="lazy">
                         <div class="history-text">
-                            <h1>Sejarah TK El-Fitra</h1>
-                            <p>Tentang Kami adalah tempat untuk mengetahui lebih lanjut tentang El-Fitra, lembaga pendidikan yang berkomitmen menciptakan generasi unggul berbasis nilai-nilai Islami.</p>
+                            <h1>{{ __('messages.about_us_title') }}</h1>
+                            <p>{{ app()->getLocale() === 'en' ? __('messages.about_us_text_en') : __('messages.about_us_text_en') }}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Vision and Mission -->
-            <div class="row vision-mission">
+            <div class="row vision-mission container" style="margin-left: 85px;">
                 <div class="col-md-6">
                     <div class="card">
-                        <h4 class="text-center">Visi</h4>
-                        <p>Menjadikan TK El-Fitra sebagai pusat pendidikan dini berbasis Islami yang unggul dan berakhlak mulia.</p>
+                        <h4 class="text-center">{{ __('messages.vision') }}</h4>
+                        <p>{{ app()->getLocale() === 'en' ? 'To become a leading Islamic-based early childhood education center with virtuous character.' : 'Menjadikan TK El-Fitra sebagai pusat pendidikan dini berbasis Islami yang unggul dan berakhlak mulia.' }}</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card">
-                        <h4 class="text-center">Misi</h4>
+                        <h4 class="text-center">{{ __('messages.mission') }}</h4>
                         <ul>
-                            <li>Mengembangkan potensi anak melalui pembelajaran Islami.</li>
-                            <li>Menciptakan lingkungan belajar yang menyenangkan.</li>
-                            <li>Kolaborasi dengan orang tua untuk pendidikan holistik.</li>
+                            <li>{{ app()->getLocale() === 'en' ? 'Developing children\'s potential through Islamic learning.' : 'Mengembangkan potensi anak melalui pembelajaran Islami.' }}</li>
+                            <li>{{ app()->getLocale() === 'en' ? 'Creating a fun learning environment.' : 'Menciptakan lingkungan belajar yang menyenangkan.' }}</li>
+                            <li>{{ app()->getLocale() === 'en' ? 'Collaborating with parents for holistic education.' : 'Kolaborasi dengan orang tua untuk pendidikan holistik.' }}</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Program -->
             <div class="row program-section">
                 <div class="col-12">
-                    <h3 class="text-center">Program Pendidikan</h3>
+                    <h3 class="text-center" style="margin-right: 45px;">{{ __('messages.program') }}</h3>
                     <div class="program-container">
                         <div class="program-wrapper">
-                            @php
-                                $programs = [
-                                    ['icon' => 'bi-lightbulb', 'title' => 'Kreativitas', 'desc' => 'Kelas seni dan kerajinan.'],
-                                    ['icon' => 'bi-book', 'title' => 'Pendidikan Agama', 'desc' => 'Pembelajaran Al-Qur\'an.'],
-                                    ['icon' => 'bi-play-circle', 'title' => 'Permainan Edukatif', 'desc' => 'Aktivitas perkembangan.'],
-                                    ['icon' => 'bi-heart', 'title' => 'Pendidikan Karakter', 'desc' => 'Pembentukan akhlak mulia.'],
-                                    ['icon' => 'bi-music-note', 'title' => 'Musik dan Tari', 'desc' => 'Ekspresi seni anak.'],
-                                    ['icon' => 'bi-brush', 'title' => 'Seni Lukis', 'desc' => 'Melukis dan menggambar.'],
-                                    ['icon' => 'bi-balloon', 'title' => 'Kegiatan Bermain', 'desc' => 'Bermain sambil belajar.'],
-                                ];
-                                $programGroups = array_chunk($programs, 5);
-                            @endphp
-                            @foreach ($programGroups as $index => $group)
-                                <div class="program-group {{ $index === 0 ? 'active' : '' }}">
-                                    @foreach ($group as $program)
-                                        <div class="card">
-                                            <i class="bi {{ $program['icon'] }}"></i>
-                                            <h5>{{ $program['title'] }}</h5>
-                                            <p>{{ $program['desc'] }}</p>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endforeach
-                        </div>
-                        @if (count($programGroups) > 1)
-                            <button class="program-prev btn btn-success">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            </button>
-                            <button class="program-next btn btn-success">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            </button>
-                        @endif
-                        <div class="program-pagination text-center mt-3">
-                            @for ($i = 0; $i < count($programGroups); $i++)
-                                <span class="page-number {{ $i === 0 ? 'active' : '' }}">{{ $i + 1 }}</span>
-                            @endfor
+                            <div class="program-group active">
+                                <a href="{{ route('jenjang.sma.unggulan-akademik') }}" class="text-decoration-none">
+                                    <div class="card">
+                                        <i class="bi bi-book"></i>
+                                        <h5>{{ __('messages.academic_program') }}</h5>
+                                        <p>{{ __('messages.academic_program_desc') }}</p>
+                                    </div>
+                                </a>
+                                <a href="{{ route('jenjang.sma.ekstrakurikuler') }}" class="text-decoration-none">
+                                    <div class="card">
+                                        <i class="bi bi-star"></i>
+                                        <h5>{{ __('messages.extracurricular_program') }}</h5>
+                                        <p>{{ __('messages.extracurricular_program_desc') }}</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Facilities -->
-            <div class="row facilities-section animate__animated animate__fadeInUp">
+            <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
-                    <div class="card">
-                        <h2 class="text-center">Fasilitas</h2>
-                        <div class="row text-center">
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-building"></i>
-                                <p>Gedung</p>
+                    <div class="fasilitas-card">
+                        <div class="col-md-12">
+                            <h2 class="text-center">{{ __('messages.facilities') }}</h2>
+                            <div class="row text-center mt-4">
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-building"></i>
+                                    <p class="card-text">{{ __('messages.facility_building') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-shop"></i>
+                                    <p class="card-text">{{ __('messages.facility_canteen') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-basket3"></i>
+                                    <p class="card-text">{{ __('messages.facility_field') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-cup-straw"></i>
+                                    <p class="card-text">{{ __('messages.facility_lunch') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-book-half"></i>
+                                    <p class="card-text">{{ __('messages.facility_library') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-hourglass-split"></i>
+                                    <p class="card-text">{{ __('messages.facility_lab') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-person-video2"></i>
+                                    <p class="card-text">{{ __('messages.facility_hall') }}</p>
+                                </div>
+                                <div class="col-6 col-md-3 mb-3">
+                                    <i class="bi bi-door-open"></i>
+                                    <p class="card-text">{{ __('messages.facility_prayer_room') }}</p>
+                                </div>
                             </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-shop"></i>
-                                <p>Kantin</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-basket3"></i>
-                                <p>Lapangan</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-cup-straw"></i>
-                                <p>Makan Siang</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-book-half"></i>
-                                <p>Perpustakaan</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-hourglass-split"></i>
-                                <p>Laboratorium</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-person-video2"></i>
-                                <p>Aula</p>
-                            </div>
-                            <div class="col-md-3 facility-item">
-                                <i class="bi bi-door-open"></i>
-                                <p>Mushola</p>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row animate__animated animate__fadeInUp">
+                <div class="col-12">
+                    <div class="registration-image" style="margin-top: 30px;">
+                        <div class="registration-text text-center">
+                            <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
+                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
                         </div>
                     </div>
                 </div>
@@ -155,7 +145,7 @@
             <!-- News -->
             <div class="row news-section">
                 <div class="col-12">
-                    <h3 class="text-center">Berita Terbaru</h3>
+                    <h3 class="text-center" style="margin-top: 30px;">{{ __('messages.news_title') }}</h3>
                     <div class="news-container">
                         <div class="news-wrapper">
                             @php
@@ -167,9 +157,9 @@
                                         <div class="col-md-4">
                                             <a href="{{ route('berita.detail', $berita->id) }}" class="text-decoration-none">
                                                 <div class="news-item">
-                                                    <img src="{{ $berita->gambar ? Storage::url($berita->gambar) : asset('images/placeholder.jpg') }}" alt="{{ $berita->judul }}" class="img-fluid" loading="lazy">
-                                                    <h5>{{ $berita->judul }}</h5>
-                                                    <p>{{ Str::limit($berita->deskripsi, 50) }}</p>
+                                                    <img src="{{ $berita->gambar ? Storage::url($berita->gambar) : asset('images/placeholder.jpg') }}" alt="{{ app()->getLocale() === 'en' ? $berita->judul_en : $berita->judul }}" class="img-fluid" loading="lazy">
+                                                    <h5>{{ app()->getLocale() === 'en' ? $berita->judul_en : $berita->judul }}</h5>
+                                                    <p>{{ app()->getLocale() === 'en' ? Str::limit($berita->deskripsi_en, 50) : Str::limit($berita->deskripsi, 50) }}</p>
                                                 </div>
                                             </a>
                                         </div>

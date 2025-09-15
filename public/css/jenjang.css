@@ -5,16 +5,39 @@ body {
     color: #333;
 }
 
+/* Navbar */
+.navbar {
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-bottom: 2px solid #000000;
+    max-width: 1350px;
+    width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
 /* Slider */
 .slider-container {
-    height: 60vh;
+    height: 183px;
     position: relative;
-    margin-bottom: 3rem; /* Jarak antar menu */
+    margin-bottom: 3rem;
+    max-width: 1350px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f8f9fa;
 }
 
 .slider-container .carousel-item img {
-    height: 60vh;
-    object-fit: cover;
+    width: 310px;
+    height: 183px;
+    margin: 0 auto;
+    object-fit: none;
+    image-rendering: optimizeQuality;
 }
 
 .slider-container .carousel-caption {
@@ -27,7 +50,7 @@ body {
 
 .slider-container .carousel-caption h1 {
     color: #fff;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
@@ -35,7 +58,7 @@ body {
 
 /* Content Container */
 .content-container {
-    margin-top: 3rem;
+    margin-top: 6rem;
     padding: 0 15px;
 }
 
@@ -44,7 +67,7 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 3rem; /* Jarak antar menu */
+    margin-bottom: 3rem;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -52,16 +75,16 @@ body {
 }
 
 .history-section img {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
+    width: 320px;
+    height: 300px;
     border-radius: 8px;
+    margin: 0 auto;
 }
 
 .history-section .history-text h1 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #000000; /* Warna judul hitam */
+    color: #000000;
 }
 
 .history-section .history-text p {
@@ -69,17 +92,17 @@ body {
     color: #333;
 }
 
-/* Vision and Mission */
+/* Vision, Mission, and Target Lulusan */
 .vision-mission {
-    margin-bottom: 3rem; /* Jarak antar menu */
+    margin-bottom: 3rem;
 }
 
 .vision-mission .card {
-    border: 2px solid #28a745;
+    border: 2px solid #000000;
     border-radius: 8px;
     background-color: #fff;
     padding: 15px;
-    height: 180px;
+    height: 280px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
@@ -90,7 +113,7 @@ body {
 
 .vision-mission h4 {
     font-size: 1.4rem;
-    color: #000000; /* Warna judul hitam */
+    color: #000000;
     margin-bottom: 10px;
 }
 
@@ -102,20 +125,18 @@ body {
 
 /* Program Section */
 .program-section {
-    margin-bottom: 3rem; /* Jarak antar menu */
-    margin-left: 5px; /* Geser ke kiri */
+    margin-bottom: 3rem;
+    margin-left: 5px;
 }
 
 .program-section h3 {
     font-size: 1.8rem;
-    color: #000000; /* Warna judul hitam */
+    color: #000000;
     margin-bottom: 1.5rem;
 }
 
 .program-section .program-container {
     position: relative;
-    overflow-x: hidden; /* Menghindari scrollbar horizontal */
-    overflow-y: hidden; /* Menghindari scrollbar vertikal */
 }
 
 .program-section .program-wrapper {
@@ -123,10 +144,11 @@ body {
 }
 
 .program-section .program-group {
-    display: none;
-    flex-direction: row; /* Tata letak horizontal */
-    flex-wrap: nowrap; /* Tidak membungkus ke baris baru */
-    justify-content: flex-start; /* Kartu sejajar ke kiri */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .program-section .program-group.active {
@@ -134,30 +156,29 @@ body {
 }
 
 .program-section .card {
-    border: 2px solid #28a745;
+    border: 2px solid #000000;
     border-radius: 8px;
     background-color: #fff;
-    background-image: url('/images/program.jpeg'); /* Gambar latar belakang */
+    background-image: url('/images/program.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
-    height: 180px; /* Tinggi kartu */
-    width: calc(20% - 4px); /* Lebar kartu 20% dari container, dikurangi jarak */
+    height: 200px;
+    width: calc(70% - 10px); /* Dua kartu, masing-masing 50% lebar */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    text-align: center; /* Ikon dan teks ditengah */
-    display: inline-flex; /* Kartu ditampilkan inline */
+    text-align: center;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    margin-right: 2px; /* Jarak antar kartu sangat rapat */
-    box-sizing: border-box; /* Pastikan padding dan border dihitung dalam lebar */
+    box-sizing: border-box;
 }
 
-.program-section .card:last-child {
-    margin-right: 0; /* Menghapus margin-right pada kartu terakhir */
+.program-section .card:hover {
+    transform: translateY(-5px);
 }
 
 .program-section .card::before {
@@ -167,114 +188,187 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.7); /* Overlay putih untuk keterbacaan teks */
+    background: rgba(255, 255, 255, 0.7);
     z-index: 1;
 }
 
 .program-section .card * {
     position: relative;
-    z-index: 2; /* Konten di atas overlay */
-}
-
-.program-section .card:hover {
-    transform: translateY(-5px);
+    z-index: 2;
 }
 
 .program-section .card i {
     font-size: 1.5rem;
-    color: #28a745;
+    color: #000000;
     margin-bottom: 10px;
 }
 
 .program-section .card h5 {
-    font-size: 1.1rem; /* Ukuran font sedikit diperkecil */
+    font-size: 1.1rem;
     margin: 8px 0;
     color: #333;
 }
 
 .program-section .card p {
-    font-size: 0.8rem; /* Ukuran font diperkecil untuk muat */
+    font-size: 0.8rem;
     color: #333;
 }
 
-.program-section .program-prev,
-.program-section .program-next {
+/* Facilities Section */
+.content-section {
+    margin-bottom: 3rem;
+}
+
+.fasilitas-card {
+    position: relative;
+    background-image: url('/images/daftar2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #000000;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1350px;
+    width: 100%;
+    height: 270px;
+    margin: 0 auto;
+}
+
+.fasilitas-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.fasilitas-card .col-md-12 {
+    position: relative;
+    z-index: 2;
+}
+
+.fasilitas-card h2 {
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.fasilitas-card i {
+    font-size: 2.5rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.fasilitas-card p {
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Testimonial Section */
+.testimonial-section {
+    margin-bottom: 3rem;
+}
+
+.testimonial-section h3 {
+    font-size: 1.8rem;
+    color: #000000;
+    margin-bottom: 1.5rem;
+}
+
+.testimoni-container {
+    position: relative;
+}
+
+.testimoni-wrapper {
+    position: relative;
+}
+
+.testimoni-group {
+    display: none;
+}
+
+.testimoni-group.active {
+    display: flex;
+}
+
+.testimonial-section .card {
+    border: 2px solid #000000;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 15px;
+    height: 220px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-section .card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-section .card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.testimonial-section .card p {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.testimonial-section .card h6 {
+    font-size: 1rem;
+    color: #666;
+}
+
+.testimonial-section .testimoni-prev,
+.testimonial-section .testimoni-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #28a745;
+    background-color: #000000;
     border: none;
     padding: 10px;
     border-radius: 50%;
 }
 
-.program-section .program-prev {
+.testimonial-section .testimoni-prev {
     left: 10px;
 }
 
-.program-section .program-next {
+.testimonial-section .testimoni-next {
     right: 10px;
 }
 
-.program-section .program-pagination {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.program-section .program-pagination .page-number {
+.testimonial-section .testimoni-pagination .page-number {
     font-size: 1rem;
-    color: #000000; /* Angka berwarna hitam */
-    background-color: #28a745; /* Latar hijau */
+    color: #ffffff;
+    background-color: #000000;
     padding: 5px 10px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;
-    display: inline-block;
 }
 
-.program-section .program-pagination .page-number.active {
+.testimonial-section .testimoni-pagination .page-number.active {
     font-weight: bold;
     text-decoration: underline;
 }
 
-/* Facilities Section */
-.facilities-section {
-    margin-bottom: 3rem; /* Jarak antar menu */
-}
-
-.facilities-section .card {
-    border: 1px solid #28a745;
-    border-radius: 8px;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.facilities-section h2 {
-    font-size: 1.8rem;
-    color: #000000; /* Warna judul hitam */
-    margin-bottom: 1.5rem;
-}
-
-.facilities-section .facility-item i {
-    font-size: 2.5rem;
-    color: #28a745;
-}
-
-.facilities-section .facility-item p {
-    font-size: 0.9rem;
-    color: #333;
-}
-
 /* News Section */
 .news-section {
-    margin-bottom: 3rem; /* Jarak antar menu */
-    margin-left: 1px; /* Geser ke kiri */
+    margin-bottom: 3rem;
+    margin-left: 1px;
 }
 
 .news-section h3 {
     font-size: 1.8rem;
-    color: #000000; /* Warna judul hitam */
+    color: #000000;
     margin-bottom: 1.5rem;
 }
 
@@ -330,7 +424,7 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #28a745;
+    background-color: #000000;
     border: none;
     padding: 10px;
     border-radius: 50%;
@@ -346,8 +440,8 @@ body {
 
 .news-pagination .page-number {
     font-size: 1rem;
-    color: #000000; /* Angka berwarna hitam */
-    background-color: #28a745; /* Latar hijau */
+    color: #ffffff;
+    background-color: #000000;
     padding: 5px 10px;
     margin: 0 5px;
     cursor: pointer;
@@ -359,103 +453,23 @@ body {
     text-decoration: underline;
 }
 
-/* Testimonial Section (for SMA) */
-.testimonial-section {
-    margin-bottom: 3rem; /* Jarak antar menu */
-}
-
-.testimonial-section h3 {
-    font-size: 1.8rem;
-    color: #000000; /* Warna judul hitam */
-    margin-bottom: 1.5rem;
-}
-
-.testimonial-section .testimoni-container {
-    position: relative;
-}
-
-.testimonial-section .testimoni-wrapper {
-    position: relative;
-}
-
-.testimonial-section .testimoni-group {
-    display: none;
-}
-
-.testimonial-section .testimoni-group.active {
-    display: flex;
-}
-
-.testimonial-section .card {
-    border: 2px solid #28a745;
-    border-radius: 8px;
-    background-color: #fff;
-    padding: 15px;
-    height: 220px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.testimonial-section .card:hover {
-    transform: translateY(-5px);
-}
-
-.testimonial-section .card img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0 auto;
-}
-
-.testimonial-section .card p {
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.testimonial-section .card h6 {
-    font-size: 1rem;
-    color: #666;
-}
-
-.testimonial-section .testimoni-prev,
-.testimonial-section .testimoni-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #28a745;
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-}
-
-.testimonial-section .testimoni-prev {
-    left: 10px;
-}
-
-.testimonial-section .testimoni-next {
-    right: 10px;
-}
-
-.testimonial-section .testimoni-pagination .page-number {
-    font-size: 1rem;
-    color: #000000; /* Angka berwarna hitam */
-    background-color: #28a745; /* Latar hijau */
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.testimonial-section .testimoni-pagination .page-number.active {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
+    .slider-container {
+        height: 183px;
+        margin-top: 60px;
+    }
+
+    .slider-container .carousel-item img {
+        width: 310px;
+        height: 183px;
+        margin: 0 auto;
+        object-fit: none;
+        image-rendering: optimizeQuality;
+    }
+
     .slider-container .carousel-caption h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 
     .history-section {
@@ -464,9 +478,10 @@ body {
     }
 
     .history-section img {
-        width: 100%;
-        height: 150px;
+        width: 310px;
+        height: 183px;
         margin-bottom: 1rem;
+        margin: 0 auto;
     }
 
     .history-section .history-text h1 {
@@ -477,20 +492,32 @@ body {
         font-size: 1rem;
     }
 
-    .vision-mission .card,
-    .facilities-section .card,
-    .testimonial-section .card {
+    .vision-mission .card {
         height: auto;
         margin-bottom: 1rem;
     }
 
     .program-section .card {
-        width: calc(20% - 2px); /* Lebar kartu diperkecil untuk layar kecil */
+        width: 100%; /* Satu kartu per baris di layar kecil */
         height: 160px;
-        margin-right: 2px; /* Jarak antar kartu tetap rapat */
+        margin-bottom: 10px;
     }
 
-    .program-section .card:last-child {
-        margin-right: 0; /* Menghapus margin-right pada kartu terakhir */
+    .fasilitas-card {
+        height: auto;
+        padding: 1rem;
+    }
+
+    .fasilitas-card i {
+        font-size: 2rem;
+    }
+
+    .fasilitas-card p {
+        font-size: 0.8rem;
+    }
+
+    .testimonial-section .card {
+        height: auto;
+        margin-bottom: 1rem;
     }
 }

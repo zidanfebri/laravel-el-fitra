@@ -8,12 +8,13 @@ use App\Models\Testimoni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class AdminController extends Controller
 {
     public function dataSiswa()
     {
-        $pendaftarans = Pendaftaran::all();
+        $pendaftarans = Pendaftaran::paginate(10);
         if ($pendaftarans->isEmpty()) {
             Log::info('Tidak ada data di tabel pendaftarans pada ' . now());
         } else {
@@ -27,7 +28,7 @@ class AdminController extends Controller
         $tanggal = $request->input('tanggal');
         $beritas = Berita::when($tanggal, function($query) use ($tanggal) {
             return $query->whereDate('tanggal_terbit', $tanggal);
-        })->paginate(5); // Pagination 5 per halaman
+        })->paginate(5);
         return view('admin.berita', compact('beritas'));
     }
 
@@ -45,7 +46,12 @@ class AdminController extends Controller
             'gambar' => 'nullable|image|max:2048',
         ]);
 
+        $tr = new GoogleTranslate();
+        $tr->setSource('id')->setTarget('en');
+
         $data = $request->all();
+        $data['judul_en'] = $tr->translate($request->judul);
+        $data['deskripsi_en'] = $tr->translate($request->deskripsi);
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('berita', 'public');
@@ -71,9 +77,14 @@ class AdminController extends Controller
             'gambar' => 'nullable|image|max:2048',
         ]);
 
+        $tr = new GoogleTranslate();
+        $tr->setSource('id')->setTarget('en');
+
         $berita = Berita::findOrFail($id);
 
         $data = $request->all();
+        $data['judul_en'] = $tr->translate($request->judul);
+        $data['deskripsi_en'] = $tr->translate($request->deskripsi);
 
         if ($request->hasFile('gambar')) {
             if ($berita->gambar) {
@@ -105,7 +116,7 @@ class AdminController extends Controller
         $search = $request->input('search');
         $testimonis = Testimoni::when($search, function($query) use ($search) {
             return $query->where('nama', 'like', '%'.$search.'%');
-        })->paginate(10); // Pagination 10 per halaman
+        })->paginate(10);
         return view('admin.testimoni', compact('testimonis'));
     }
 
@@ -123,7 +134,11 @@ class AdminController extends Controller
             'gambar' => 'nullable|image|max:2048',
         ]);
 
+        $tr = new GoogleTranslate();
+        $tr->setSource('id')->setTarget('en');
+
         $data = $request->all();
+        $data['keterangan_en'] = $tr->translate($request->keterangan);
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('testimoni', 'public');
@@ -149,9 +164,13 @@ class AdminController extends Controller
             'gambar' => 'nullable|image|max:2048',
         ]);
 
+        $tr = new GoogleTranslate();
+        $tr->setSource('id')->setTarget('en');
+
         $testimoni = Testimoni::findOrFail($id);
 
         $data = $request->all();
+        $data['keterangan_en'] = $tr->translate($request->keterangan);
 
         if ($request->hasFile('gambar')) {
             if ($testimoni->gambar) {
@@ -247,5 +266,18 @@ class AdminController extends Controller
     public function laporan()
     {
         return view('admin.laporan');
+    }
+
+    public function showBeritaDetail($id)
+    {
+        Log::info('Fetching berita with ID: ' . $id);
+        try {
+            $berita = Berita::findOrFail($id);
+            Log::info('Berita found: ' . $berita->toJson());
+            return view('berita.detail', compact('berita'));
+        } catch (\Exception $e) {
+            Log::error('Error fetching berita: ' . $e->getMessage());
+            return view('berita.detail')->with('error', 'Berita not found');
+        }
     }
 }

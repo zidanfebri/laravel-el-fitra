@@ -7,14 +7,15 @@
             @csrf
             <div class="mb-3">
                 <label for="jenis_pendaftaran" class="form-label">Jenis Pendaftaran</label>
-                <select class="form-control" id="jenis_pendaftaran" name="jenis_pendaftaran" required>
+                <select class="form-control custom-select" id="jenis_pendaftaran" name="jenis_pendaftaran" required>
+                    <option value="">Pilih Jenis Pendaftaran</option>
                     <option value="baru">Baru</option>
                     <option value="pindahan">Pindahan</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="jenjang" class="form-label">Jenjang Pendidikan</label>
-                <select class="form-control" id="jenjang" name="jenjang" required onchange="updateTingkat()">
+                <select class="form-control custom-select" id="jenjang" name="jenjang" required>
                     <option value="">Pilih Jenjang</option>
                     <option value="TK">TK</option>
                     <option value="SD">SD</option>
@@ -24,7 +25,7 @@
             </div>
             <div class="mb-3">
                 <label for="tingkat" class="form-label">Tingkat</label>
-                <select class="form-control" id="tingkat" name="tingkat" required>
+                <select class="form-control custom-select" id="tingkat" name="tingkat" required>
                     <option value="">Pilih Tingkat</option>
                 </select>
             </div>
@@ -34,24 +35,42 @@
 
     <script>
         function updateTingkat() {
+            const jenisPendaftaran = document.getElementById('jenis_pendaftaran').value;
             const jenjang = document.getElementById('jenjang').value;
             const tingkatSelect = document.getElementById('tingkat');
             tingkatSelect.innerHTML = '<option value="">Pilih Tingkat</option>';
 
             let tingkats = [];
-            switch (jenjang) {
-                case 'TK':
-                    tingkats = ['TK A', 'TK B'];
-                    break;
-                case 'SD':
-                    for (let i = 1; i <= 6; i++) tingkats.push(`SD Kelas ${i}`);
-                    break;
-                case 'SMP':
-                    for (let i = 7; i <= 9; i++) tingkats.push(`SMP Kelas ${i}`);
-                    break;
-                case 'SMA':
-                    for (let i = 10; i <= 12; i++) tingkats.push(`SMA Kelas ${i}`);
-                    break;
+            if (jenisPendaftaran === 'baru') {
+                switch (jenjang) {
+                    case 'TK':
+                        tingkats = ['TK A', 'TK B'];
+                        break;
+                    case 'SD':
+                        tingkats = ['SD Kelas 1'];
+                        break;
+                    case 'SMP':
+                        tingkats = ['SMP Kelas 7'];
+                        break;
+                    case 'SMA':
+                        tingkats = ['SMA Kelas 10'];
+                        break;
+                }
+            } else if (jenisPendaftaran === 'pindahan') {
+                switch (jenjang) {
+                    case 'TK':
+                        tingkats = ['TK A', 'TK B'];
+                        break;
+                    case 'SD':
+                        for (let i = 1; i <= 6; i++) tingkats.push(`SD Kelas ${i}`);
+                        break;
+                    case 'SMP':
+                        for (let i = 7; i <= 9; i++) tingkats.push(`SMP Kelas ${i}`);
+                        break;
+                    case 'SMA':
+                        for (let i = 10; i <= 12; i++) tingkats.push(`SMA Kelas ${i}`);
+                        break;
+                }
             }
 
             tingkats.forEach(tingkat => {
@@ -61,5 +80,9 @@
                 tingkatSelect.appendChild(option);
             });
         }
+
+        // Event listener untuk jenis pendaftaran dan jenjang
+        document.getElementById('jenis_pendaftaran').addEventListener('change', updateTingkat);
+        document.getElementById('jenjang').addEventListener('change', updateTingkat);
     </script>
 @endsection

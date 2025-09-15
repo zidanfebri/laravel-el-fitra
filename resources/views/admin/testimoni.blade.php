@@ -29,19 +29,18 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>Data Calon Siswa</span></a></li>
-            <li class="nav-item"><a class="nav-link active" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Program</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>Laporan</span></a></li>
             <li class="nav-item text-center">
-                <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle" style="color: #28a745;"></i></a>
+                <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
             </li>
         </ul>
     </div>
 
     <!-- Content -->
     <div class="content">
-        <h2 class="mb-4">Manajemen Testimoni</h2>
+        <h2 class="mb-4" id="contentTitle">Manajemen Testimoni</h2>
         @if (session('success'))
             <div class="alert alert-success" id="successAlert">{{ session('success') }}</div>
         @endif
@@ -58,7 +57,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Gambar</th>
                             <th>Nama</th>
                             <th>Keterangan</th>
@@ -67,9 +66,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $counter = ($testimonis->currentPage() - 1) * $testimonis->perPage() + 1; @endphp
                         @foreach ($testimonis as $testimoni)
                             <tr>
-                                <td>{{ $testimoni->id }}</td>
+                                <td>{{ $counter++ }}</td>
                                 <td>
                                     @if ($testimoni->gambar)
                                         <img src="{{ Storage::url($testimoni->gambar) }}" alt="{{ $testimoni->nama }}" class="table-img">
@@ -78,7 +78,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $testimoni->nama }}</td>
-                                <td>{{ $testimoni->keterangan }}</td>
+                                <td>{{ Str::limit($testimoni->keterangan, 50) }}</td>
                                 <td>{{ $testimoni->tanggal }}</td>
                                 <td class="action-buttons">
                                     <a href="{{ route('admin.edit-testimoni', $testimoni->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
@@ -92,7 +92,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $testimonis->links() }}
+                <div class="pagination-container">
+                    {{ $testimonis->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
     </div>
@@ -104,13 +106,19 @@
             const content = document.querySelector('.content');
             const header = document.querySelector('.header');
             const tableContainer = document.querySelector('.table-container');
+            const contentTitle = document.getElementById('contentTitle');
 
             toggleSidebar.addEventListener('click', function(e) {
                 e.preventDefault();
                 sidebar.classList.toggle('collapsed');
                 content.classList.toggle('collapsed');
                 header.classList.toggle('collapsed');
-                tableContainer.classList.toggle('collapsed');
+                if (tableContainer) {
+                    tableContainer.classList.toggle('collapsed');
+                }
+                if (contentTitle) {
+                    contentTitle.classList.toggle('collapsed');
+                }
 
                 const icon = this.querySelector('i');
                 if (sidebar.classList.contains('collapsed')) {

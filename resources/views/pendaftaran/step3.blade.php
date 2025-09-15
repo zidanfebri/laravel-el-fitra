@@ -38,7 +38,7 @@
                 <input type="file" class="form-control" id="kk" name="kk" required>
             </div>
             <button type="submit" class="btn btn-success">Submit</button>
-            <a href="{{ route('pendaftaran.step3') }}" class="btn btn-secondary">Back</a>
+            <a href="{{ route('pendaftaran.step2') }}" class="btn btn-secondary">Back</a>
         </form>
     </div>
 @endsection

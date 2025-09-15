@@ -4,6 +4,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\AdminController;
+use App\Models\Berita;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
+
+Route::get('/language/{locale}', function ($locale) {
+    Log::info('Permintaan pergantian bahasa: ' . $locale);
+    if (in_array($locale, ['id', 'en'])) {
+        Session::put('locale', $locale);
+        Log::info('Locale diset di session: ' . Session::get('locale'));
+        \Artisan::call('cache:clear');
+        \Artisan::call('config:clear');
+        \Artisan::call('view:clear');
+        Log::info('Cache dibersihkan setelah pergantian bahasa');
+    } else {
+        Session::put('locale', 'id');
+    }
+    
+    $previousUrl = url()->previous();
+    return redirect($previousUrl);
+})->name('language.switch');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
@@ -13,7 +33,7 @@ Route::get('reset', [LoginController::class, 'showResetForm'])->name('reset.form
 Route::post('reset', [LoginController::class, 'reset'])->name('reset');
 
 Route::get('pendaftaran', [PendaftaranController::class, 'step1'])->name('pendaftaran.step1');
-Route::post('pendaftaran/step2', [PendaftaranController::class, 'step2'])->name('pendaftaran.step2');
+Route::match(['GET', 'POST'], 'pendaftaran/step2', [PendaftaranController::class, 'step2'])->name('pendaftaran.step2');
 Route::match(['GET', 'POST'], 'pendaftaran/step3', [PendaftaranController::class, 'step3'])->name('pendaftaran.step3');
 Route::post('pendaftaran/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
@@ -31,9 +51,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::delete('delete-berita/{id}', [AdminController::class, 'deleteBerita'])->name('admin.delete-berita');
     Route::get('testimoni', [AdminController::class, 'testimoni'])->name('admin.testimoni');
     Route::get('laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
-    Route::get('edit-siswa/{id}', [AdminController::class, 'editSiswa'])->name('admin.edit-siswa');
-    Route::delete('delete-siswa/{id}', [AdminController::class, 'deleteSiswa'])->name('admin.delete-siswa');
-    Route::get('testimoni', [AdminController::class, 'testimoni'])->name('admin.testimoni');
     Route::get('create-testimoni', [AdminController::class, 'createTestimoni'])->name('admin.create-testimoni');
     Route::post('store-testimoni', [AdminController::class, 'storeTestimoni'])->name('admin.store-testimoni');
     Route::get('edit-testimoni/{id}', [AdminController::class, 'editTestimoni'])->name('admin.edit-testimoni');
@@ -78,7 +95,6 @@ Route::get('/berita', function () {
     return view('berita', compact('beritas'));
 })->name('berita');
 
-// Route untuk Jenjang Pendidikan
 Route::get('/jenjang/tk', function () {
     return view('jenjang.tk');
 })->name('jenjang.tk');
@@ -95,8 +111,12 @@ Route::get('/jenjang/sma', function () {
     return view('jenjang.sma');
 })->name('jenjang.sma');
 
-// Route untuk Detail Berita
-Route::get('/berita/{id}', function ($id) {
-    $berita = Berita::findOrFail($id);
-    return view('berita.detail', compact('berita'));
-})->name('berita.detail');
+Route::get('/jenjang/sma/unggulan-akademik', function () {
+    return view('jenjang.unggulan-akademik');
+})->name('jenjang.sma.unggulan-akademik');
+
+Route::get('/jenjang/sma/ekstrakurikuler', function () {
+    return view('jenjang.ekstrakurikuler');
+})->name('jenjang.sma.ekstrakurikuler');
+
+Route::get('/berita/{id}', [AdminController::class, 'showBeritaDetail'])->name('berita.detail');

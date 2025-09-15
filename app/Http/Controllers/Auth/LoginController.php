@@ -17,6 +17,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('username', 'password');
+        $ip = $request->ip();
 
         // Hash password input dengan MD5 untuk dibandingkan
         $credentials['password'] = md5($credentials['password']);
@@ -27,19 +28,32 @@ class LoginController extends Controller
             auth()->login($user);
 
             if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->route('login')->with([
+                    'success' => $ip . ' says: Login successful!',
+                    'redirect_url' => route('admin.data-siswa')
+                ]);
             }
             auth()->logout();
-            return redirect()->back()->withErrors(['username' => 'Anda tidak memiliki akses admin.']);
+            return redirect()->back()->withErrors(['username' => __(
+                'messages.no_admin_access',
+                ['ip' => $ip]
+            )]);
         }
 
-        return redirect()->back()->withErrors(['username' => 'Invalid credentials']);
+        return redirect()->back()->withErrors(['username' => __(
+            'messages.invalid_credentials',
+            ['ip' => $ip]
+        )]);
     }
 
     public function logout(Request $request)
     {
+        $ip = $request->ip();
         auth()->logout();
-        return redirect('/login');
+        return redirect()->route('login')->with([
+            'success' => $ip . 'Anda berhasil keluar',
+            'redirect_url' => route('login')
+        ]);
     }
 
     public function showResetForm()
@@ -55,14 +69,22 @@ class LoginController extends Controller
         ]);
 
         $user = User::where('username', $request->username)->first();
+        $ip = $request->ip();
+
         if ($user) {
             $user->password = md5($request->new_password);
             $user->reset_password = Str::random(60);
             $user->save();
 
-            return redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login dengan password baru.');
+            return redirect()->route('login')->with('success', __(
+                'messages.password_reset_success',
+                ['ip' => $ip]
+            ));
         }
 
-        return redirect()->back()->withErrors(['username' => 'Username tidak ditemukan.']);
+        return redirect()->back()->withErrors(['username' => __(
+            'messages.username_not_found',
+            ['ip' => $ip]
+        )]);
     }
 }

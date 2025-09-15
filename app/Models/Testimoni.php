@@ -13,6 +13,7 @@ class Testimoni extends Model
         'gambar',
         'nama',
         'keterangan',
+        'keterangan_en',
         'tanggal',
     ];
 }
