@@ -28,18 +28,15 @@
             </button>
         </div>
 
-        <!-- Content -->
         <div class="content-container">
             <!-- History -->
-            <div class="content-section">
-                <div class="row animate__animated animate__fadeInUp">
-                    <div class="col-12">
-                        <div class="history-section">
-                            <img src="{{ asset('images/el.jpeg') }}" alt="{{ __('messages.about_us') }}" loading="lazy">
-                            <div class="history-text">
-                                <h1>{{ __('messages.about_us_title') }}</h1>
-                                <p>{{ app()->getLocale() === 'en' ? 'Founded in 2014, SD El-Fitra is dedicated to providing quality elementary education based on Islamic values.' : 'Didirikan pada tahun 2014, SD El-Fitra berdedikasi menyediakan pendidikan dasar berkualitas berbasis nilai-nilai Islami.' }}</p>
-                            </div>
+            <div class="row animate__animated animate__fadeInUp">
+                <div class="col-12">
+                    <div class="history-section">
+                        <img src="{{ asset('images/el.jpeg') }}" alt="{{ __('messages.about_us') }}" loading="lazy">
+                        <div class="history-text">
+                            <h1>{{ __('messages.about_us_title') }}</h1>
+                            <p>{{ app()->getLocale() === 'en' ? __('messages.about_us_text_en') : __('messages.about_us_text_en') }}</p>
                         </div>
                     </div>
                 </div>
@@ -62,35 +59,6 @@
                                 <li>{{ app()->getLocale() === 'en' ? 'Building Islamic character in students.' : 'Membangun karakter Islami siswa.' }}</li>
                                 <li>{{ app()->getLocale() === 'en' ? 'Supporting academic and extracurricular achievements.' : 'Mendukung prestasi akademik dan ekstrakurikuler.' }}</li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Program -->
-            <div class="content-section">
-                <div class="row program-section animate__animated animate__fadeInUp">
-                    <div class="col-12">
-                        <h3 class="text-center" style="margin-right: 45px;">{{ __('messages.program') }}</h3>
-                        <div class="program-container">
-                            <div class="program-wrapper">
-                                <div class="program-group active">
-                                    <a href="{{ route('jenjang.sma.unggulan-akademik') }}" class="text-decoration-none">
-                                        <div class="card">
-                                            <i class="bi bi-book"></i>
-                                            <h5>{{ __('messages.academic_program') }}</h5>
-                                            <p>{{ __('messages.academic_program_desc') }}</p>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('jenjang.sma.ekstrakurikuler') }}" class="text-decoration-none">
-                                        <div class="card">
-                                            <i class="bi bi-star"></i>
-                                            <h5>{{ __('messages.extracurricular_program') }}</h5>
-                                            <p>{{ __('messages.extracurricular_program_desc') }}</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,17 +108,6 @@
                 </div>
             </div>
 
-            <div class="row animate__animated animate__fadeInUp">
-                <div class="col-12">
-                    <div class="registration-image" style="margin-top: 30px;">
-                        <div class="registration-text text-center">
-                            <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
-                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- News -->
             <div class="content-section">
                 <div class="row news-section animate__animated animate__fadeInUp">
@@ -193,6 +150,17 @@
                                     @endfor
                                 </div>
                             @endif
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row animate__animated animate__fadeInUp">
+                    <div class="col-12">
+                        <div class="registration-image" style="margin-top: 10px; margin-bottom: 30px;">
+                            <div class="registration-text text-center">
+                                <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
+                                <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+/* Existing styles from previous artifact */
 body {
     margin: 0;
     font-family: 'Poppins', Arial, sans-serif;
@@ -11,7 +12,10 @@ body {
     top: 0;
     left: 0;
     height: 100vh;
-    background-color: #28a745;
+    background-image: url('/images/sidebar1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     padding-top: 20px;
     transition: width 0.3s ease;
     overflow-y: auto;
@@ -27,6 +31,10 @@ body {
 }
 
 .sidebar.collapsed .nav-link span {
+    display: none;
+}
+
+.sidebar.collapsed .logo-sidebar::after {
     display: none;
 }
 
@@ -141,7 +149,10 @@ body {
     max-width: calc(100% - 250px);
     margin-left: 250px;
     margin-bottom: 1.5rem;
-    transition: all 0.3s ease; /* Match table-container transition */
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    transition: all 0.3s ease;
 }
 
 .content h2.collapsed {
@@ -193,7 +204,7 @@ body {
 }
 
 .table th {
-    background-color: #28a745;
+    background-color: #4169E1;
     color: #ffffff;
     font-weight: bold;
     text-align: center;
@@ -231,27 +242,110 @@ body {
     text-align: center;
     width: auto;
     max-width: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.alert {
-    margin: 10px 0;
-    padding: 10px 15px;
+.action-buttons .btn:hover {
+    transform: translateY(-2px);
 }
 
 .form-container {
     max-width: calc(100% - 250px);
     margin-left: 250px;
     padding: 20px 30px;
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 10px;
     margin-right: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    transition: all 0.3s ease;
 }
 
 .form-container.collapsed {
     max-width: calc(100% - 60px);
     margin-left: 60px;
+}
+
+.form-container .form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-container .form-control,
+.form-container .form-select {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container .form-control:focus,
+.form-container .form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.form-container .btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.form-container .btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.form-container .btn-info {
+    background-color: #17a2b8;
+    border: none;
+}
+
+.form-container .btn-info:hover {
+    background-color: #138496;
+    transform: translateY(-2px);
+}
+
+.form-container .select-wrapper {
+    position: relative;
+}
+
+.form-container .select-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #495057;
+    pointer-events: none;
+    font-size: 0.9rem;
+}
+
+/* Select2 specific styles */
+.form-container .select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    height: 38px;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.form-container .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 28px;
+}
+
+.form-container .select2-container--default .select2-selection--single .select2-selection__arrow {
+    display: none; /* Hide default Select2 arrow to use bi-chevron-down */
+}
+
+.form-container .select2-container--default .select2-selection--single:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.alert {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 5px;
 }
 
 .table-header-controls {
@@ -288,6 +382,10 @@ body {
         display: none;
     }
 
+    .sidebar .logo-sidebar::after {
+        display: none;
+    }
+
     .content {
         margin-left: 60px;
         padding: 70px 15px 15px 15px;
@@ -298,12 +396,7 @@ body {
         margin-left: 60px;
     }
 
-    .table-container {
-        max-width: calc(100% - 60px);
-        margin-left: 60px;
-        padding: 15px;
-    }
-
+    .table-container,
     .form-container {
         max-width: calc(100% - 60px);
         margin-left: 60px;
@@ -343,6 +436,20 @@ body {
         font-size: 0.8rem;
         width: auto;
         max-width: none;
+    }
+
+    .form-container .form-control,
+    .form-container .form-select {
+        font-size: 0.85rem;
+    }
+
+    .form-container .select2-container--default .select2-selection--single {
+        height: 34px;
+        font-size: 0.85rem;
+    }
+
+    .form-container .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 24px;
     }
 
     .table-header-controls {

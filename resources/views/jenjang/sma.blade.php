@@ -28,7 +28,7 @@
         </div>
 
         <!-- Content -->
-        <div class="content-container">
+        <div class="container content-container">
             <!-- History -->
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
@@ -84,8 +84,8 @@
                                 <a href="{{ route('jenjang.sma.unggulan-akademik') }}" class="text-decoration-none">
                                     <div class="card">
                                         <i class="bi bi-book"></i>
-                                        <h5>{{ __('messages.academic_program') }}</h5>
-                                        <p>{{ __('messages.academic_program_desc') }}</p>
+                                        <h5>{{ __('messages.academic_prog') }}</h5>
+                                        <p>{{ __('messages.academic_prog_desc') }}</p>
                                     </div>
                                 </a>
                                 <a href="{{ route('jenjang.sma.ekstrakurikuler') }}" class="text-decoration-none">

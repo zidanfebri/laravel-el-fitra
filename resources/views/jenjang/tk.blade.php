@@ -61,32 +61,6 @@
                 </div>
             </div>
 
-            <div class="row program-section">
-                <div class="col-12">
-                    <h3 class="text-center" style="margin-right: 45px;">{{ __('messages.program') }}</h3>
-                    <div class="program-container">
-                        <div class="program-wrapper">
-                            <div class="program-group active">
-                                <a href="{{ route('jenjang.sma.unggulan-akademik') }}" class="text-decoration-none">
-                                    <div class="card">
-                                        <i class="bi bi-book"></i>
-                                        <h5>{{ __('messages.academic_program') }}</h5>
-                                        <p>{{ __('messages.academic_program_desc') }}</p>
-                                    </div>
-                                </a>
-                                <a href="{{ route('jenjang.sma.ekstrakurikuler') }}" class="text-decoration-none">
-                                    <div class="card">
-                                        <i class="bi bi-star"></i>
-                                        <h5>{{ __('messages.extracurricular_program') }}</h5>
-                                        <p>{{ __('messages.extracurricular_program_desc') }}</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
                     <div class="fasilitas-card">
@@ -126,17 +100,6 @@
                                     <p class="card-text">{{ __('messages.facility_prayer_room') }}</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row animate__animated animate__fadeInUp">
-                <div class="col-12">
-                    <div class="registration-image" style="margin-top: 30px;">
-                        <div class="registration-text text-center">
-                            <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
-                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
                         </div>
                     </div>
                 </div>
@@ -182,6 +145,17 @@
                             @for ($i = 0; $i < count($beritas); $i++)
                                 <span class="page-number {{ $i === 0 ? 'active' : '' }}">{{ $i + 1 }}</span>
                             @endfor
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row animate__animated animate__fadeInUp">
+                <div class="col-12">
+                    <div class="registration-image" style="margin-top: 10px; margin-bottom: 30px;">
+                        <div class="registration-text text-center">
+                            <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
+                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
                         </div>
                     </div>
                 </div>

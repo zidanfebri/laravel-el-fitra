@@ -47,16 +47,19 @@
                     <div class="col-md-6">
                         <div class="card">
                             <h4 class="text-center">{{ __('messages.vision') }}</h4>
-                            <p>{{ app()->getLocale() === 'en' ? 'To become a leading Islamic-based junior high school.' : 'Menjadikan SMP El-Fitra sebagai sekolah menengah unggul berbasis Islami.' }}</p>
+                            <p>{{ app()->getLocale() === 'en' ? 'To become an educational institution that produces Muslim scholars with noble morals.' : 'Menjadi lembaga pendidikan yang mencetak cendekiawan muslim berakhlak mulia.' }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card">
                             <h4 class="text-center">{{ __('messages.mission') }}</h4>
                             <ul>
-                                <li>{{ app()->getLocale() === 'en' ? 'Improving academic performance.' : 'Meningkatkan prestasi akademik.' }}</li>
-                                <li>{{ app()->getLocale() === 'en' ? 'Building Islamic character.' : 'Membangun karakter Islami.' }}</li>
-                                <li>{{ app()->getLocale() === 'en' ? 'Providing modern facilities.' : 'Menyediakan fasilitas modern.' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'To create a superior school that explores, directs, and develops children potential.' : 'Mewujudkan sekolah unggulan yang menggali, mengarahkan, dan mengembangkan potensi anak.' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'Develop interactive learning materials and media.' : 'Mengembangkan materi dan media pembelajaran yang interaktif' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'Developing science and technology-based learning patterns' : 'Mengembangkan pola pembelajaran berbasis sains dan teknologi.' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'Develop competent and exemplary teaching and education personnel.' : 'Mengembangkan tenaga pendidik dan kependidikan yang kompeten dan teladan.' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'Realizing curriculum development that includes 8 educational standards' : 'Mewujudkan pengembangan kurikulum yang meliputi 8 standar pendidikan' }}</li>
+                                <li>{{ app()->getLocale() === 'en' ? 'Creating a clean, beautiful and comfortable school environment to prevent pollution and environmental damage.' : 'Mewujudkan kondisi lingkungan sekolah yang bersih, asri, dan nyaman untuk mencegah pencemaran dan kerusakan lingkungan' }}</li>
                             </ul>
                         </div>
                     </div>
@@ -73,8 +76,8 @@
                                     <a href="{{ route('jenjang.sma.unggulan-akademik') }}" class="text-decoration-none">
                                         <div class="card">
                                             <i class="bi bi-book"></i>
-                                            <h5>{{ __('messages.academic_program') }}</h5>
-                                            <p>{{ __('messages.academic_program_desc') }}</p>
+                                            <h5>{{ __('messages.academic_prog') }}</h5>
+                                            <p>{{ __('messages.academic_prog_desc') }}</p>
                                         </div>
                                     </a>
                                     <a href="{{ route('jenjang.sma.ekstrakurikuler') }}" class="text-decoration-none">

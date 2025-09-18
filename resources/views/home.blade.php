@@ -39,10 +39,10 @@
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
                     <div class="tentang-kami-container">
-                        <div class="col-md-4">
+                        <div class="col-12 col-md-5">
                             <img src="{{ asset('images/el.jpeg') }}" alt="{{ __('messages.about_us') }}" class="img-fluid rounded tentang-kami-image" loading="lazy">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-12 col-md-7">
                             <h1 class="tentang-kami-title">{{ __('messages.about_us_title') }}</h1>
                             <p class="tentang-kami-text">{{ __('messages.about_us_text') }}</p>
                         </div>
@@ -99,6 +99,7 @@
         </div>
 
         <!-- Fasilitas -->
+        <div class="content-section">
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
                     <div class="fasilitas-card">
@@ -142,6 +143,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 
         <!-- Berita -->
         <div class="content-section">
@@ -173,15 +175,15 @@
                             @endforeach
                         </div>
                         @if (count($beritas) > 1)
-                            <button class="news-prev btn btn-success">
+                            <button class="news-prev btn btn-success" type="button">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             </button>
-                            <button class="news-next btn btn-success">
+                            <button class="news-next btn btn-success" type="button">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             </button>
                             <div class="news-pagination text-center mt-3">
                                 @for ($i = 0; $i < count($beritas); $i++)
-                                    <span class="page-number {{ $i === 0 ? 'active' : '' }}">{{ $i + 1 }}</span>
+                                    <span class="page-number {{ $i === 0 ? 'active' : '' }}" role="button" tabindex="0">{{ $i + 1 }}</span>
                                 @endfor
                             </div>
                         @endif
@@ -191,12 +193,13 @@
         </div>
 
         <!-- Pendaftaran -->
+        <div class="content-section">
             <div class="row animate__animated animate__fadeInUp">
                 <div class="col-12">
                     <div class="registration-image">
                         <div class="registration-text text-center">
                             <h2 class="text-black">{{ __('messages.registration_title') }}</h2>
-                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-light mt-2">{{ __('messages.register_now') }}</a>
+                            <a href="{{ route('pendaftaran.step1') }}" class="btn btn-dark text-white mt-2">{{ __('messages.register_now') }}</a>
                         </div>
                     </div>
                 </div>
@@ -241,20 +244,39 @@
                 </div>
             </div>
         </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Prevent browser scroll restoration
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+                console.log('Scroll restoration set to manual');
+            }
+
+            // Prevent auto-focus
+            if (document.activeElement !== document.body) {
+                document.activeElement.blur();
+                console.log('Blurred active element to prevent auto-scroll');
+            }
+
+            // Log scroll events for debugging
+            window.addEventListener('scroll', function() {
+                console.log('Scroll event triggered, scrollY:', window.scrollY, 'Source:', document.activeElement);
+            });
+
             // Intersection Observer for smooth section reveal
             const sections = document.querySelectorAll('.content-section');
             const observerOptions = {
                 root: null,
                 threshold: 0.1,
-                rootMargin: '0px'
+                rootMargin: '0px' // Adjusted to prevent premature triggering
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        console.log('Section visible:', entry.target.id || 'no-id');
                         entry.target.classList.add('visible');
                         observer.unobserve(entry.target);
                     }
@@ -273,7 +295,9 @@
             let newsCurrentGroup = 0;
 
             if (newsGroups.length > 1 && newsPrevButton && newsNextButton && newsPageNumbers.length > 0) {
-                newsPrevButton.addEventListener('click', function() {
+                newsPrevButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('News prev clicked');
                     newsGroups[newsCurrentGroup].classList.remove('active');
                     newsPageNumbers[newsCurrentGroup].classList.remove('active');
                     newsCurrentGroup = (newsCurrentGroup - 1 + newsGroups.length) % newsGroups.length;
@@ -281,7 +305,9 @@
                     newsPageNumbers[newsCurrentGroup].classList.add('active');
                 });
 
-                newsNextButton.addEventListener('click', function() {
+                newsNextButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('News next clicked');
                     newsGroups[newsCurrentGroup].classList.remove('active');
                     newsPageNumbers[newsCurrentGroup].classList.remove('active');
                     newsCurrentGroup = (newsCurrentGroup + 1) % newsGroups.length;
@@ -290,7 +316,9 @@
                 });
 
                 newsPageNumbers.forEach((page, index) => {
-                    page.addEventListener('click', function() {
+                    page.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        console.log('News page clicked:', index + 1);
                         newsGroups[newsCurrentGroup].classList.remove('active');
                         newsPageNumbers[newsCurrentGroup].classList.remove('active');
                         newsCurrentGroup = index;
@@ -319,6 +347,7 @@
                     };
                     const statObserver = new IntersectionObserver((entries) => {
                         if (entries[0].isIntersecting) {
+                            console.log('Stat number visible, starting animation');
                             updateNumber();
                             statObserver.unobserve(number);
                         }
@@ -326,6 +355,16 @@
                     statObserver.observe(number);
                 });
             }
+
+            // Prevent empty anchor clicks
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        console.log('Prevented empty anchor scroll');
+                    }
+                });
+            });
         });
     </script>
 @endsection

@@ -35,6 +35,7 @@ Route::post('reset', [LoginController::class, 'reset'])->name('reset');
 Route::get('pendaftaran', [PendaftaranController::class, 'step1'])->name('pendaftaran.step1');
 Route::match(['GET', 'POST'], 'pendaftaran/step2', [PendaftaranController::class, 'step2'])->name('pendaftaran.step2');
 Route::match(['GET', 'POST'], 'pendaftaran/step3', [PendaftaranController::class, 'step3'])->name('pendaftaran.step3');
+Route::match(['GET', 'POST'], 'pendaftaran/step4', [PendaftaranController::class, 'step4'])->name('pendaftaran.step4');
 Route::post('pendaftaran/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
@@ -61,22 +62,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 Route::get('/', function () {
     return view('home');
 })->name('home');
-
-Route::get('/tentang-kami', function () {
-    return view('tentang-kami');
-})->name('tentang-kami');
-
-Route::get('/tentang-kami/muatan-kurikulum', function () {
-    return view('muatan-kurikulum');
-})->name('muatan-kurikulum');
-
-Route::get('/tentang-kami/fasilitas-pembelajaran', function () {
-    return view('fasilitas-pembelajaran');
-})->name('fasilitas-pembelajaran');
-
-Route::get('/tentang-kami/profil-kelulusan', function () {
-    return view('profil-kelulusan');
-})->name('profil-kelulusan');
 
 Route::get('/program', function () {
     return view('program');

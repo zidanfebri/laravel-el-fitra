@@ -28,10 +28,7 @@ class LoginController extends Controller
             auth()->login($user);
 
             if ($user->role === 'admin') {
-                return redirect()->route('login')->with([
-                    'success' => $ip . ' says: Login successful!',
-                    'redirect_url' => route('admin.data-siswa')
-                ]);
+                return redirect()->route('admin.data-siswa')->with('success', $ip . ' says: Login successful!');
             }
             auth()->logout();
             return redirect()->back()->withErrors(['username' => __(
@@ -50,10 +47,7 @@ class LoginController extends Controller
     {
         $ip = $request->ip();
         auth()->logout();
-        return redirect()->route('login')->with([
-            'success' => $ip . 'Anda berhasil keluar',
-            'redirect_url' => route('login')
-        ]);
+        return redirect()->route('login')->with('success', $ip . ' Anda berhasil keluar');
     }
 
     public function showResetForm()

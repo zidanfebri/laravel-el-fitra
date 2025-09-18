@@ -1,7 +1,16 @@
-// Pastikan Bootstrap JS dimuat (sudah ada di public/js/bootstrap.bundle.min.js)
+// Disable scroll restoration immediately
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+    console.log('Scroll restoration set to manual');
+}
 
-// Kustom JavaScript untuk Slider, Animasi Scroll, Animasi Angka, dan Toggle Password
 document.addEventListener('DOMContentLoaded', function () {
+    // Prevent auto-focus on page load
+    if (document.activeElement !== document.body) {
+        document.activeElement.blur();
+        console.log('Blurred active element to prevent auto-scroll');
+    }
+
     // Inisialisasi Slider Otomatis untuk Halaman Utama
     const imageSlider = document.getElementById('imageSlider');
     if (imageSlider) {
@@ -20,6 +29,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
     // Animasi Scroll
     function checkScroll() {
         const elements = document.querySelectorAll('.animate__animated');
@@ -29,48 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 element.classList.add('animate__fadeInUp', 'animate__fadeInLeft', 'animate__fadeInRight');
             }
         });
-
-        // Animasi Angka Statistik
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(number => {
-            const position = number.parentElement.getBoundingClientRect();
-            if (position.top < window.innerHeight - 100) {
-                if (!number.classList.contains('animated')) {
-                    const target = parseInt(number.getAttribute('data-target'));
-                    let start = 0;
-                    const duration = 1500;
-                    const step = target / (duration / 100);
-                    const counter = setInterval(() => {
-                        start += step;
-                        if (start >= target) {
-                            clearInterval(counter);
-                            number.textContent = target;
-                        } else {
-                            number.textContent = Math.floor(start);
-                        }
-                    }, 100);
-                    number.classList.add('animated');
-                }
-            }
-        });
     }
 
-    window.addEventListener('scroll', checkScroll);
-    checkScroll(); // Jalankan saat halaman dimuat
-
-    // Toggle Password Visibility
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#password');
-    if (togglePassword && password) {
-        togglePassword.addEventListener('click', function () {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('bi-eye-slash');
-            this.classList.toggle('bi-eye');
-        });
-    } else {
-        console.error('Toggle password elements not found');
-    }
+    window.addEventListener('scroll', debounce(checkScroll, 100));
 
     // Manual Navigation untuk Berita
     const newsContainers = document.querySelectorAll('.news-container');
@@ -128,4 +107,14 @@ document.addEventListener('DOMContentLoaded', function () {
             wrap: true
         });
     }
+
+    // Prevent empty anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            if (this.getAttribute('href') === '#') {
+                e.preventDefault();
+                console.log('Prevented empty anchor scroll');
+            }
+        });
+    });
 });

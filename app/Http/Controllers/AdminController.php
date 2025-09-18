@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Stichoza\GoogleTranslate\GoogleTranslate;
+use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class AdminController extends Controller
 {
@@ -206,6 +209,15 @@ class AdminController extends Controller
     public function deleteSiswa($id)
     {
         $pendaftaran = Pendaftaran::findOrFail($id);
+        if ($pendaftaran->akte_path) {
+            Storage::disk('public')->delete($pendaftaran->akte_path);
+        }
+        if ($pendaftaran->kk_path) {
+            Storage::disk('public')->delete($pendaftaran->kk_path);
+        }
+        if ($pendaftaran->mutasi_path) {
+            Storage::disk('public')->delete($pendaftaran->mutasi_path);
+        }
         $pendaftaran->delete();
         return redirect()->route('admin.data-siswa')->with('success', 'Data siswa berhasil dihapus.');
     }
@@ -225,9 +237,28 @@ class AdminController extends Controller
             'nama_siswa' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'rt' => 'required|string|max:10',
+            'rw' => 'required|string|max:10',
+            'kelurahan' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'kota' => 'required|string|max:255',
+            'provinsi' => 'required|string|max:255',
+            'penyakit_bawaan' => 'nullable|string|max:255',
+            'tinggi' => 'nullable|numeric|min:0',
+            'berat_badan' => 'nullable|numeric|min:0',
+            'anak_ke' => 'nullable|integer|min:1',
+            'jumlah_saudara' => 'nullable|integer|min:0',
             'nama_ayah' => 'required|string|max:255',
             'nama_ibu' => 'required|string|max:255',
-            'nomor_telepon' => 'required|string|max:20',
+            'pekerjaan_ayah' => 'required|string|max:255',
+            'pekerjaan_ibu' => 'required|string|max:255',
+            'pendidikan_ayah' => 'required|string|max:255',
+            'pendidikan_ibu' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:15',
+            'no_whatsapp' => 'required|string|max:15',
+            'alamat_email' => 'required|email|max:255',
+            'sumber_informasi' => 'required|string|max:255',
             'akte_path' => 'nullable|file|mimes:pdf|max:2048',
             'kk_path' => 'nullable|file|mimes:pdf|max:2048',
             'mutasi_path' => 'nullable|file|mimes:pdf|max:2048',
@@ -263,9 +294,59 @@ class AdminController extends Controller
         return redirect()->route('admin.data-siswa')->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    public function laporan()
+    public function laporan(Request $request)
     {
-        return view('admin.laporan');
+        $jenjang = $request->input('jenjang');
+        $tanggalAwal = $request->input('tanggal_awal');
+        $tanggalAkhir = $request->input('tanggal_akhir');
+
+        $query = Pendaftaran::query();
+        if ($jenjang) {
+            $query->where('jenjang', $jenjang);
+        }
+        if ($tanggalAwal && $tanggalAkhir) {
+            $query->whereDate('tanggal_pendaftaran', '>=', $tanggalAwal)
+                  ->whereDate('tanggal_pendaftaran', '<=', $tanggalAkhir);
+        }
+
+        $pendaftarans = $query->paginate(10);
+        Log::info('Filtered pendaftarans: ' . $pendaftarans->toJson());
+
+        if ($request->has('download') && $request->input('download') === 'pdf') {
+            $data = $query->get();
+            $pdf = Pdf::loadView('admin.laporan-pdf', compact('data', 'jenjang', 'tanggalAwal', 'tanggalAkhir'));
+            return $pdf->download('laporan_pendaftaran_' . date('Ymd_His') . '.pdf');
+        }
+
+        if ($request->has('download') && $request->input('download') === 'excel') {
+            $data = $query->get();
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->setCellValue('A1', 'Jenis Pendaftaran');
+            $sheet->setCellValue('B1', 'Jenjang');
+            $sheet->setCellValue('C1', 'Tingkat');
+            $sheet->setCellValue('D1', 'Nama Siswa');
+            $sheet->setCellValue('E1', 'Tanggal Pendaftaran');
+
+            $row = 2;
+            foreach ($data as $pendaftaran) {
+                $sheet->setCellValue('A' . $row, $pendaftaran->jenis_pendaftaran);
+                $sheet->setCellValue('B' . $row, $pendaftaran->jenjang);
+                $sheet->setCellValue('C' . $row, $pendaftaran->tingkat);
+                $sheet->setCellValue('D' . $row, $pendaftaran->nama_siswa);
+                $sheet->setCellValue('E' . $row, $pendaftaran->tanggal_pendaftaran);
+                $row++;
+            }
+
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="laporan_pendaftaran_' . date('Ymd_His') . '.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer->save('php://output');
+            exit;
+        }
+
+        return view('admin.laporan', compact('pendaftarans', 'jenjang', 'tanggalAwal', 'tanggalAkhir'));
     }
 
     public function showBeritaDetail($id)

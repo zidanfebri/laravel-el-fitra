@@ -10,7 +10,10 @@ class Pendaftaran extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'jenis_pendaftaran', 'jenjang', 'tingkat', 'nama_siswa', 'tanggal_lahir', 'jenis_kelamin',
-        'nama_ayah', 'nama_ibu', 'nomor_telepon', 'akte_path', 'kk_path', 'mutasi_path'
+        'nama_ayah', 'nama_ibu', 'pekerjaan_ayah', 'pekerjaan_ibu', 'pendidikan_ayah', 'pendidikan_ibu',
+        'no_hp', 'no_whatsapp', 'alamat_email', 'sumber_informasi', 'akte_path', 'kk_path', 'mutasi_path',
+        'alamat', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota', 'provinsi', 'penyakit_bawaan', 'tinggi',
+        'berat_badan', 'anak_ke', 'jumlah_saudara', 'tanggal_pendaftaran'
     ];
-    public $timestamps = true; // Pastikan ini true jika menggunakan created_at dan updated_at
+    public $timestamps = true;
 }

@@ -7,6 +7,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <style>
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+        .toast {
+            min-width: 300px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .toast-header {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .toast-body {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -42,12 +63,11 @@
     <div class="content">
         <h2 class="mb-4" id="contentTitle">Data Calon Siswa</h2>
         <div class="table-container">
-            <h3 class="mb-3">Data Calon Siswa/Siswi</h3>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Jenis Pendaftaran</th>
                             <th>Jenjang</th>
                             <th>Tingkat</th>
@@ -56,7 +76,7 @@
                             <th>Jenis Kelamin</th>
                             <th>Nama Ayah</th>
                             <th>Nama Ibu</th>
-                            <th>Nomor Telepon</th>
+                            <th>Nomor Whatsapp</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -74,7 +94,7 @@
                                     <td>{{ $pendaftaran->jenis_kelamin }}</td>
                                     <td>{{ $pendaftaran->nama_ayah }}</td>
                                     <td>{{ $pendaftaran->nama_ibu }}</td>
-                                    <td>{{ $pendaftaran->nomor_telepon }}</td>
+                                    <td>{{ $pendaftaran->no_whatsapp }}</td>
                                     <td class="action-buttons">
                                         <a href="{{ route('admin.edit-siswa', $pendaftaran->id) }}" class="btn btn-primary btn-sm" title="Edit"><i class="bi bi-pencil"></i></a>
                                         <form action="{{ route('admin.delete-siswa', $pendaftaran->id) }}" method="POST" style="display:inline;">
@@ -100,6 +120,26 @@
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    @if (session('success'))
+        <div class="toast-container">
+            <div class="toast animate__animated animate__fadeInUp" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                <div class="toast-header">
+                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="Elfitra Logo" width="20" class="me-2">
+                    <strong class="me-auto">El-Fitra</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                    <div class="mt-2 text-end">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggleSidebar = document.getElementById('toggleSidebar');
@@ -130,9 +170,21 @@
                     icon.classList.add('bi-arrow-left-circle');
                 }
             });
+
+            // Initialize toast
+            const toastEl = document.querySelector('.toast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+
+                // Handle Enter key to dismiss toast
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        toast.hide();
+                    }
+                });
+            }
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

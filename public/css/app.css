@@ -1,7 +1,7 @@
 @import url('bootstrap.min.css');
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Changed to prevent smooth scroll issues */
 }
 
 body {
@@ -18,16 +18,20 @@ body {
 .navbar {
     padding: 1rem 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to right, #ffffff, #a3e4d7);
-    border-bottom: 2px solid #28a745;
+    border-bottom: 2px solid #FF8C00;
     width: 100%;
     position: sticky;
     top: 0;
     z-index: 1000;
+    background-image: url('/images/navbar1.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire navbar */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
 }
 
 .navbar-brand {
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    margin-left: 10px;
 }
 
 .navbar-nav {
@@ -57,8 +61,10 @@ body {
 }
 
 #imageSlider {
-    height: 100%;
+    height: 100vh; /* Use viewport height */
+    min-height: 400px; /* Ensure minimum height */
     margin-top: 87px;
+    overflow: hidden; /* Prevent overflow issues */
 }
 
 #imageSlider img {
@@ -66,6 +72,7 @@ body {
     object-fit: cover;
     height: 100%;
     width: 100%;
+    max-height: 100vh; /* Ensure images don’t exceed carousel height */
 }
 
 .slider-text-fixed {
@@ -165,7 +172,7 @@ body {
     padding: 5px;
     margin: 0 auto clamp(1rem, 2vw, 1.5rem);
     text-align: center;
-    border: 2px solid #28a745;
+    border: 2px solid #000000;
     height: 150px;
     width: 100%;
     max-width: 250px;
@@ -174,6 +181,8 @@ body {
     justify-content: center;
     transition: transform 0.2s ease;
     background-color: #ffffff;
+    min-height: 150px; /* Ensure fixed height to prevent layout shifts */
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .stat-title {
@@ -194,7 +203,7 @@ body {
     margin: 0.2rem 0;
     font-size: clamp(0.9rem, 1.8vw, 1rem);
     font-weight: bold;
-    color: #28a745;
+    color: #000000;
     background-color: transparent;
     padding: 0;
     border-radius: 0;
@@ -289,16 +298,17 @@ body {
     margin: 0 5px;
     padding: 5px 10px;
     cursor: pointer;
-    border: 1px solid #28a745;
+    border: 1px solid #ffffff !important;
     border-radius: 50%;
-    color: #28a745;
-    background-color: transparent;
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
 }
 
 .news-pagination .page-number.active {
-    background-color: #000000;
-    color: #28a745;
-    border-color: #000000;
+    background-color: #000000 !important;
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
 .registration-image {
@@ -306,7 +316,7 @@ body {
     position: relative;
     width: 100%;
     border-radius: 10px;
-    background: url('/images/daftar2.jpg') no-repeat center center;
+    background: url('/images/navbar1.jpg') no-repeat center center;
     background-size: cover;
 }
 
@@ -357,7 +367,10 @@ body {
 }
 
 .footer {
-    background: linear-gradient(to right, #ffffff, #a3e4d7);
+    background-image: url('/images/navbar.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire navbar */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
     color: #333;
     padding: 2rem 0;
     width: 100%;
@@ -374,11 +387,19 @@ body {
     text-decoration: underline;
 }
 
+.footer h5 img {
+    width: 40px;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
 .scroll-top-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #28a745;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    background-color: #000000;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -390,6 +411,10 @@ body {
     cursor: pointer;
     z-index: 1000;
     transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top-btn.visible {
+    opacity: 1;
 }
 
 .scroll-top-btn:hover {
@@ -536,7 +561,7 @@ body {
 }
 
 .language-dropdown .dropdown-menu {
-    min-width: 120px;
+    min-width: 80px;
 }
 
 .language-dropdown .dropdown-item {
@@ -547,6 +572,18 @@ body {
 .language-dropdown .dropdown-item:hover {
     background-color: #28a745;
     color: #ffffff;
+}
+
+.language-dropdown .fi {
+    width: 1.2rem;
+    height: 0.9rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.language-dropdown .dropdown-item .fi {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .custom-select {
@@ -577,9 +614,9 @@ body {
 
 .tentang-kami-image {
     height: auto;
-    max-height: 450px;
+    max-height: 500px;
     width: 100%;
-    max-width: 450px;
+    max-width: 200px;
     object-fit: cover;
     margin: 0 auto clamp(1rem, 2vw, 1.5rem);
 }
@@ -592,14 +629,13 @@ body {
 
 .tentang-kami-text {
     color: #000000;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    margin: 0 0 clamp(1rem, 2vw, 1.5rem) clamp(1rem, 2vw, 1.5rem);
-    margin-bottom: 130px;
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
+    margin: 0 0 clamp(1rem, 2vw, 1.1rem) clamp(1rem, 2vw, 1.5rem);
 }
 
 .fasilitas-card {
     position: relative;
-    background: url('/images/daftar1.jpg') no-repeat center center;
+    background: url('/images/navbar1.jpg') no-repeat center center !important;
     background-size: cover;
     border: 1px solid #000000;
     padding: clamp(1.5rem, 3vw, 2rem);
@@ -627,7 +663,7 @@ body {
 }
 
 .fasilitas-card h2 {
-    color: #000000;
+    color: #ffffff !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     font-size: clamp(1.5rem, 3vw, 2rem);
     margin-bottom: clamp(1rem, 2vw, 1.5rem);
@@ -759,7 +795,7 @@ body {
         padding: 0.4rem 0.8rem;
     }
     .tentang-kami-image {
-        max-height: 200px;
+        max-height: 400px;
         margin-bottom: 1rem;
     }
     .registration-image {
