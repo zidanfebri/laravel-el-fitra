@@ -3,138 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>{{ __('messages.site_name') }}</title>
-    <link href="{{ asset('css/app.css') }}?v=7" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <link href="{{ asset('css/app.css') }}?v=18" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" rel="stylesheet">
-    <link href="{{ asset('css/jenjang.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <script>
+        window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
+        window.onunload = () => {};
+    </script>
+
     <style>
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1055;
+        .navbar-nav .nav-link.btn-orange-nav {
+            background-color: #ff8c00 !important;
+            color: #ffffff !important;
+            font-weight: 400 !important;
+            border-radius: 25px !important;
+            padding: 8px 20px !important;
+            display: inline-block !important;
         }
-        .toast {
-            min-width: 300px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .toast-header {
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        .toast-body {
-            color: #333;
+        .sitename-orange {
+            color: #ff8c00 !important;
+            font-weight: 600 !important;
         }
     </style>
 </head>
-<body class="bg-white">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand text-dark" href="{{ route('home') }}">
-                <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="40" class="me-2"> {{ __('messages.site_name') }}
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link text-dark" href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="{{ route('home') }}#tentang-kami" id="tentangKamiLink">{{ __('messages.about_us') }}</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-dark dropdown-toggle" href="#" id="programDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ __('messages.program') }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('jenjang.tk') }}">{{ __('messages.tk') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ route('jenjang.sd') }}">{{ __('messages.sd') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ route('jenjang.smp') }}">{{ __('messages.smp') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ route('jenjang.sma') }}">{{ __('messages.sma') }}</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="{{ route('pendaftaran.step1') }}">{{ __('messages.registration') }}</a></li>
-                    <li class="nav-item"><a class="nav-link text-dark" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
-                    <li class="nav-item dropdown language-dropdown">
-                        <a class="nav-link text-dark dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="fi fi-{{ app()->getLocale() == 'id' ? 'id' : 'gb' }} me-2"></span>
-                            {{ app()->getLocale() == 'id' ? __('messages.language_id') : __('messages.language_en') }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('language.switch', 'id') }}">
-                                    <span class="fi fi-id me-2"></span>{{ __('messages.language_id') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('language.switch', 'en') }}">
-                                    <span class="fi fi-gb me-2"></span>{{ __('messages.language_en') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    @yield('content')
-
-    <footer class="footer py-4">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5 class="d-flex align-items-center">
-                        <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="40" class="me-2">
-                        {{ __('messages.about_us') }}
-                    </h5>
-                    <p>{{ __('messages.footer_about_us') }}</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>{{ __('messages.footer_links') }}</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('home') }}" class="text-dark">{{ __('messages.home') }}</a></li>
-                        <li><a href="{{ route('home') }}#tentang-kami" class="text-dark tentang-kami-footer">{{ __('messages.about_us') }}</a></li>
-                        <li><a href="{{ route('pendaftaran.step1') }}" class="text-dark">{{ __('messages.registration') }}</a></li>
-                        <li><a href="{{ route('berita') }}" class="text-dark">{{ __('messages.news') }}</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>{{ __('messages.footer_contact') }}</h5>
-                    <p>{{ __('messages.footer_email') }}</p>
-                    <p>{{ __('messages.footer_phone') }}</p>
-                    <div>
-                        <a href="#" class="text-dark me-2"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-dark me-2"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-3">
-                <p class="mb-0 text-dark">{{ __('messages.footer_copyright') }}</p>
-            </div>
-        </div>
-    </footer>
-
-    <button class="scroll-top-btn" title="{{ __('messages.scroll_to_top') }}">
-        <i class="bi bi-arrow-up-circle"></i>
-    </button>
-
-    <div class="whatsapp-button">
-        <a href="https://wa.me/6285793526478" target="_blank" class="d-flex align-items-center text-decoration-none">
-            <i class="bi bi-whatsapp me-2"></i>
-            <span>{{ __('messages.whatsapp_contact') }}</span>
-        </a>
-    </div>
-
-    <!-- Toast Notification -->
+<body>
+    
     @if (session('success'))
-        <div class="toast-container">
+        <div class="toast-container position-fixed top-0 end-0 p-3">
             <div class="toast animate__animated animate__fadeInUp" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
                 <div class="toast-header">
-                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="20" class="me-2">
-                    <strong class="me-auto">{{ __('messages.site_name') }}</strong>
+                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="20" class="me-2 rounded-circle">
+                    <strong class="me-auto">{{ __('messages.site_name_menu') }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
@@ -147,131 +54,181 @@
         </div>
     @endif
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <nav class="navbar navbar-expand-lg py-1 sticky-top">
+        <div class="container-fluid px-lg-5 px-3"> 
+            <a class="navbar-brand d-flex align-items-center sitename-orange" href="{{ route('home') }}">
+                <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="40" class="me-2 rounded-circle">
+                {{ __('messages.site_name_menu') }}
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}#tentang-kami">{{ __('messages.about_us') }}</a></li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            {{ __('messages.program') }} <i class="bi bi-chevron-down ms-1"></i>
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow">
+                            <li><a class="dropdown-item" href="{{ route('jenjang.tk') }}">{{ __('messages.tk') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('jenjang.sd') }}">{{ __('messages.sd') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('jenjang.smp') }}">{{ __('messages.smp') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('jenjang.sma') }}">{{ __('messages.sma') }}</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admission.alur') }}">{{ __('messages.admission') }}</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                            <span class="fi fi-{{ app()->getLocale() == 'id' ? 'id' : 'gb' }}"></span>
+                            <i class="bi bi-chevron-down ms-1 icon-small"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                            <li><a class="dropdown-item" href="{{ route('language.switch', 'en') }}"><span class="fi fi-gb me-2"></span>EN (English)</a></li>
+                            <li><a class="dropdown-item" href="{{ route('language.switch', 'id') }}"><span class="fi fi-id me-2"></span>ID (Indonesian)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link sound-toggle p-0" href="#" id="soundToggle">
+                            <i class="bi bi-volume-up-fill"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn-orange-nav text-white fw-bold" href="{{ route('pendaftaran.check') }}">{{ __('messages.registration') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        @auth
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="nav-link btn-orange-nav btn-logout-dark text-white fw-bold">{{ __('messages.logout') }}</button>
+                            </form>
+                        @else
+                            <a class="nav-link btn-orange-nav text-white fw-bold" href="{{ route('login') }}">{{ __('messages.login') }}</a>
+                        @endauth
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @yield('content')
+
+    <footer class="footer py-4">
+        <div class="container-fluid px-lg-5 px-3"> 
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="d-flex align-items-center">
+                        <img src="{{ asset('images/elfitra.jpeg') }}" width="40" class="me-2 rounded-circle">
+                        {{ __('messages.site_name_menu') }}
+                    </h5>
+                    <p>{{ __('messages.footer_about_us') }}</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="https://www.instagram.com/smaelfitra_official/"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>{{ __('messages.footer_links') }}</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+                        <li><a href="{{ route('home') }}#tentang-kami">{{ __('messages.about_us') }}</a></li>
+                        <li><a href="{{ route('pendaftaran.check') }}">{{ __('messages.registration') }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>{{ __('messages.footer_contact') }}</h5>
+                    <p class="small mb-2">
+                        <i class="bi bi-geo-alt-fill text-orange me-2"></i>
+                        {{ __('messages.address_sma') }}
+                    </p>
+                    <p class="small mb-1"><i class="bi bi-envelope-fill text-orange me-2"></i> info@elfitra.sch.id</p>
+                    <p class="small"><i class="bi bi-telephone-fill text-orange me-2"></i> (022) 87242526</p>
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#waModal">
+                            <i class="bi bi-whatsapp me-1"></i> {{ __('messages.whatsapp_contact') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>{{ __('messages.our_location') }}</h5>
+                    <div class="map-responsive">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.902260677367!2d107.6777333!3d-6.9388896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c35eec6588bd%3A0xa880221b4d816b11!2sSMA%20EL%20FITRA!5e0!3m2!1sen!2sid!4v1634567890123!5m2!1sen!2sid" width="100%" height="150" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                <p class="mb-0">{{ __('messages.footer_copyright') }}</p>
+                <p class="mb-0 mt-2">
+                    {{ __('messages.total_visits') }}: <span class="visit-count">{{ \App\Models\Visit::first()->app_count ?? 0 }}</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="scroll-top-btn" title="{{ __('messages.scroll_to_top') }}"><i class="bi bi-arrow-up"></i></button>
+
+    <a href="#" class="whatsapp-button" data-bs-toggle="modal" data-bs-target="#waModal">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <div class="modal fade" id="waModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h6 class="modal-title"><i class="bi bi-whatsapp me-2"></i>Contact Unit</h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <div class="d-grid gap-2">
+                        <a href="https://wa.me/628123456789" target="_blank" class="btn btn-outline-success text-start"><i class="bi bi-chat-dots me-2"></i>TK El Fitra</a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="btn btn-outline-success text-start"><i class="bi bi-chat-dots me-2"></i>SD El Fitra</a>
+                        <a href="https://wa.me/628123456789" target="_blank" class="btn btn-outline-success text-start"><i class="bi bi-chat-dots me-2"></i>SMP El Fitra</a>
+                        <a href="https://wa.me/6285793526478" target="_blank" class="btn btn-outline-success text-start"><i class="bi bi-chat-dots me-2"></i>SMA El Fitra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize toast
+        document.addEventListener('DOMContentLoaded', () => {
             const toastEl = document.querySelector('.toast');
             if (toastEl) {
                 const toast = new bootstrap.Toast(toastEl);
                 toast.show();
+            }
 
-                // Handle Enter key to dismiss toast
-                document.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter') {
-                        toast.hide();
+            const btn = document.querySelector('.scroll-top-btn');
+            window.addEventListener('scroll', () => btn.style.display = window.scrollY > 300 ? 'flex' : 'none');
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            document.querySelectorAll('a[href^="#"]').forEach(a => {
+                a.addEventListener('click', e => {
+                    const href = a.getAttribute('href');
+                    if (href !== '#' && href.startsWith('#')) {
+                        e.preventDefault();
+                        const el = document.querySelector(href);
+                        if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
                     }
                 });
-            }
+            });
 
-            // Existing scroll-related scripts
-            function scrollToSection(hash) {
-                console.log('Attempting to scroll to:', hash);
-                const targetElement = document.getElementById(hash);
-                if (targetElement) {
-                    console.log('Found target element:', targetElement);
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    console.log('Target element not found:', hash);
-                }
-            }
-
-            const anchors = document.querySelectorAll('a[href*="#"]');
-            const homePath = '{{ route('home') }}';
-            console.log('Home path:', homePath, 'Current path:', window.location.pathname);
-
-            if (anchors) {
-                anchors.forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        const href = this.getAttribute('href');
-                        let path, hash;
-                        try {
-                            const url = new URL(href, window.location.origin);
-                            path = url.pathname;
-                            hash = url.hash.replace('#', '');
-                        } catch (error) {
-                            console.error('Error parsing href:', href, error);
-                            return;
-                        }
-                        const isHomePath = window.location.pathname === homePath;
-                        const isSamePage = !path || path === window.location.pathname || path === homePath;
-
-                        console.log('Anchor clicked:', {
-                            href,
-                            path: path || 'empty',
-                            hash,
-                            isSamePage,
-                            isHomePath,
-                            currentPath: window.location.pathname,
-                            homePath
-                        });
-
-                        if (hash && href.includes('#tentang-kami') && !isHomePath) {
-                            e.preventDefault();
-                            console.log('Redirecting to:', homePath + '#tentang-kami');
-                            window.location.assign(homePath + '#tentang-kami');
-                        } else if (hash && isSamePage) {
-                            e.preventDefault();
-                            scrollToSection(hash);
-                        } else if (hash) {
-                            e.preventDefault();
-                            sessionStorage.setItem('scrollTo', hash);
-                            console.log('Redirecting with sessionStorage:', href);
-                            window.location.assign(href);
-                        }
-                    });
-                });
-            }
-
-            const hash = window.location.hash.substring(1) || sessionStorage.getItem('scrollTo');
-            if (hash) {
-                console.log('Processing hash:', hash);
-                let attempts = 0;
-                const maxAttempts = 20; // Retry up to 2 seconds
-                const checkDOM = () => {
-                    if (attempts >= maxAttempts) {
-                        console.log('Max scroll attempts reached for hash:', hash);
-                        sessionStorage.removeItem('scrollTo');
-                        return;
-                    }
-                    if (document.readyState === 'complete' && document.getElementById(hash)) {
-                        scrollToSection(hash);
-                        sessionStorage.removeItem('scrollTo');
-                    } else {
-                        console.log('DOM not ready or element not found, retrying:', { hash, attempt: attempts + 1 });
-                        attempts++;
-                        setTimeout(checkDOM, 100);
-                    }
-                };
-                setTimeout(checkDOM, 500);
-            } else {
-                console.log('No hash found, scrolling to top');
-                window.scrollTo(0, 0);
-                sessionStorage.removeItem('scrollTo');
-            }
-
-            const scrollTopBtn = document.querySelector('.scroll-top-btn');
-            if (scrollTopBtn) {
-                scrollTopBtn.style.display = 'none';
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 100) {
-                        scrollTopBtn.style.display = 'flex';
-                    } else {
-                        scrollTopBtn.style.display = 'none';
-                    }
-                });
-
-                scrollTopBtn.addEventListener('click', function() {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
+            fetch('{{ route("check-auth") }}', {
+                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(d => { if (d.authenticated && d.role === 'admin') location.href = "{{ route('admin.data-siswa') }}"; })
+            .catch(() => {});
         });
     </script>
 </body>

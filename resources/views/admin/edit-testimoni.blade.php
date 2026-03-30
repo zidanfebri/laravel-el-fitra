@@ -31,6 +31,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>Data Calon Siswa</span></a></li>
             <li class="nav-item"><a class="nav-link active" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.tahun-ajaran') }}"><i class="bi bi-calendar"></i><span>Tahun Ajaran</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>Laporan</span></a></li>
             <li class="nav-item text-center">
                 <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
@@ -68,9 +69,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" class="form-control" id="gambar" name="gambar">
+                    <input type="file" class="form-control" id="gambar" name="gambar" accept="image/jpeg,image/png,image/jfif,image/jpg">
                     @if ($testimoni->gambar)
-                        <img src="{{ Storage::url($testimoni->gambar) }}" alt="{{ $testimoni->nama }}" class="table-img">
+                        <img src="{{ Storage::url($testimoni->gambar) }}" alt="{{ $testimoni->nama }}" class="edit-img mt-2">
                     @endif
                 </div>
                 <button type="submit" class="btn btn-success">Update</button>
@@ -86,13 +87,19 @@
             const content = document.querySelector('.content');
             const header = document.querySelector('.header');
             const formContainer = document.querySelector('.form-container');
+            const contentTitle = document.getElementById('contentTitle');
 
             toggleSidebar.addEventListener('click', function(e) {
                 e.preventDefault();
                 sidebar.classList.toggle('collapsed');
                 content.classList.toggle('collapsed');
                 header.classList.toggle('collapsed');
-                formContainer.classList.toggle('collapsed');
+                if (formContainer) {
+                    formContainer.classList.toggle('collapsed');
+                }
+                if (contentTitle) {
+                    contentTitle.classList.toggle('collapsed');
+                }
 
                 const icon = this.querySelector('i');
                 if (sidebar.classList.contains('collapsed')) {
@@ -103,6 +110,41 @@
                     icon.classList.add('bi-arrow-left-circle');
                 }
             });
+
+            const toastEl = document.querySelector('.toast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        toast.hide();
+                    }
+                });
+            }
+
+            const tanggalInput = document.getElementById('tanggal');
+            const dateIcon = document.querySelector('.date-icon');
+
+            if (tanggalInput) {
+                tanggalInput.addEventListener('focus', function() {
+                    try {
+                        this.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
+
+            if (dateIcon) {
+                dateIcon.addEventListener('click', function() {
+                    try {
+                        tanggalInput.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
         });
     </script>
 

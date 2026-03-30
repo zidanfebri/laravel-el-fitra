@@ -9,6 +9,25 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
+    <!-- Toast Notification -->
+    @if (session('success'))
+        <div class="toast-container">
+            <div class="toast animate__animated animate__fadeInUp" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                <div class="toast-header">
+                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="Elfitra Logo" width="20" class="me-2">
+                    <strong class="me-auto">El-Fitra</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                    <div class="mt-2 text-end">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Header -->
     <div class="header">
         <div class="user-info">
@@ -29,8 +48,9 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>Data Calon Siswa</span></a></li>
-            <li class="nav-item"><a class="nav-link active" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.tahun-ajaran') }}"><i class="bi bi-calendar"></i><span>Tahun Ajaran</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>Laporan</span></a></li>
             <li class="nav-item text-center">
                 <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
@@ -40,7 +60,7 @@
 
     <!-- Content -->
     <div class="content">
-        <h2 class="mb-4">Tambah Testimoni</h2>
+        <h2 class="mb-4" id="contentTitle">Tambah Testimoni</h2>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -55,22 +75,24 @@
                 @csrf
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" required>
+                    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="keterangan" class="form-label">Keterangan</label>
-                    <textarea class="form-control" id="keterangan" name="keterangan" rows="5" required></textarea>
+                    <textarea class="form-control" id="keterangan" name="keterangan" rows="5" required>{{ old('keterangan') }}</textarea>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 date-wrapper">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                    <input type="date" class="form-control date-input" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
-                    <input type="file" class="form-control" id="gambar" name="gambar">
+                    <input type="file" class="form-control" id="gambar" name="gambar" accept="image/jpeg,image/png,image/jfif">
                 </div>
-                <button type="submit" class="btn btn-success">Simpan</button>
-                <a href="{{ route('admin.testimoni') }}" class="btn btn-secondary">Kembali</a>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <a href="{{ route('admin.testimoni') }}" class="btn btn-secondary">Kembali</a>
+                </div>
             </form>
         </div>
     </div>
@@ -82,13 +104,19 @@
             const content = document.querySelector('.content');
             const header = document.querySelector('.header');
             const formContainer = document.querySelector('.form-container');
+            const contentTitle = document.getElementById('contentTitle');
 
             toggleSidebar.addEventListener('click', function(e) {
                 e.preventDefault();
                 sidebar.classList.toggle('collapsed');
                 content.classList.toggle('collapsed');
                 header.classList.toggle('collapsed');
-                formContainer.classList.toggle('collapsed');
+                if (formContainer) {
+                    formContainer.classList.toggle('collapsed');
+                }
+                if (contentTitle) {
+                    contentTitle.classList.toggle('collapsed');
+                }
 
                 const icon = this.querySelector('i');
                 if (sidebar.classList.contains('collapsed')) {
@@ -99,6 +127,41 @@
                     icon.classList.add('bi-arrow-left-circle');
                 }
             });
+
+            const toastEl = document.querySelector('.toast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        toast.hide();
+                    }
+                });
+            }
+
+            const tanggalInput = document.getElementById('tanggal');
+            const dateIcon = document.querySelector('.date-icon');
+
+            if (tanggalInput) {
+                tanggalInput.addEventListener('focus', function() {
+                    try {
+                        this.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
+
+            if (dateIcon) {
+                dateIcon.addEventListener('click', function() {
+                    try {
+                        tanggalInput.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
         });
     </script>
 

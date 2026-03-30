@@ -7,9 +7,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+    <style>
+        /* Tambahan style khusus detail agar selaras dengan dashboard.css */
+        .category-title {
+            background-color: #f1f3f5;
+            padding: 10px 15px;
+            border-left: 5px solid #4169E1;
+            margin: 20px 0 15px 0;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .table-detail th {
+            width: 30%;
+            background-color: #f8f9fa !important;
+            color: #333 !important;
+            text-align: left !important;
+            font-weight: 600 !important;
+        }
+        .table-detail td {
+            text-align: left !important;
+        }
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
         <div class="user-info">
             <span class="username">{{ auth()->user()->username ?? 'Admin' }}</span>
@@ -22,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo-sidebar">
             <img src="{{ asset('images/elfitra.jpeg') }}" alt="Elfitra Logo" class="logo-sidebar-img">
@@ -31,6 +58,7 @@
             <li class="nav-item"><a class="nav-link active" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>Data Calon Siswa</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.tahun-ajaran') }}"><i class="bi bi-calendar"></i><span>Tahun Ajaran</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>Laporan</span></a></li>
             <li class="nav-item text-center">
                 <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
@@ -38,116 +66,124 @@
         </ul>
     </div>
 
-    <!-- Content -->
     <div class="content">
-        <h2 class="mb-4" id="contentTitle">Detail Data Siswa</h2>
+        <h2 id="contentTitle">Detail Data Siswa</h2>
+        
         <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Informasi Lengkap Calon Siswa</h4>
+                <div class="action-buttons">
+                    <a href="{{ route('admin.data-siswa') }}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
+                    <a href="{{ route('admin.edit-siswa', $pendaftaran->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i> Edit</a>
+                </div>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="text-center">Informasi Pendaftaran</th>
-                        </tr>
-                    </thead>
+                <div class="category-title">1. DATA POKOK SISWA</div>
+                <table class="table table-bordered table-detail mb-4">
                     <tbody>
                         <tr>
-                            <th>ID</th>
-                            <td>{{ $pendaftaran->id }}</td>
-                        </tr>
-                        <tr>
-                            <th>Jenis Pendaftaran</th>
-                            <td>{{ $pendaftaran->jenis_pendaftaran }}</td>
-                        </tr>
-                        <tr>
-                            <th>Jenjang</th>
-                            <td>{{ $pendaftaran->jenjang }}</td>
-                        </tr>
-                        <tr>
-                            <th>Tingkat</th>
-                            <td>{{ $pendaftaran->tingkat }}</td>
-                        </tr>
-                        <tr>
-                            <th>Nama Siswa</th>
+                            <th>Nama Lengkap</th>
                             <td>{{ $pendaftaran->nama_siswa }}</td>
                         </tr>
                         <tr>
-                            <th>Tanggal Lahir</th>
-                            <td>{{ $pendaftaran->tanggal_lahir }}</td>
+                            <th>NISN</th>
+                            <td>{{ $pendaftaran->nisn ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Kelamin</th>
                             <td>{{ $pendaftaran->jenis_kelamin }}</td>
                         </tr>
                         <tr>
-                            <th>Alamat</th>
-                            <td>{{ $pendaftaran->alamat }}</td>
+                            <th>Tempat, Tanggal Lahir</th>
+                            <td>{{ $pendaftaran->tempat_lahir ?? '-' }}, {{ $pendaftaran->tanggal_lahir ? $pendaftaran->tanggal_lahir->format('d-m-Y') : '-' }}</td>
                         </tr>
                         <tr>
-                            <th>RT/RW</th>
-                            <td>{{ $pendaftaran->rt }}/{{ $pendaftaran->rw }}</td>
+                            <th>Agama</th>
+                            <td>{{ $pendaftaran->agama ?? 'Islam' }}</td>
                         </tr>
                         <tr>
-                            <th>Kelurahan</th>
-                            <td>{{ $pendaftaran->kelurahan }}</td>
+                            <th>Asal Sekolah</th>
+                            <td>{{ $pendaftaran->asal_sekolah ?? '-' }}</td>
                         </tr>
                         <tr>
-                            <th>Kecamatan</th>
-                            <td>{{ $pendaftaran->kecamatan }}</td>
-                        </tr>
-                        <tr>
-                            <th>Kota</th>
-                            <td>{{ $pendaftaran->kota }}</td>
-                        </tr>
-                        <tr>
-                            <th>Provinsi</th>
-                            <td>{{ $pendaftaran->provinsi }}</td>
+                            <th>Tinggi / Berat Badan</th>
+                            <td>{{ $pendaftaran->tinggi ? $pendaftaran->tinggi . ' cm' : '-' }} / {{ $pendaftaran->berat_badan ? $pendaftaran->berat_badan . ' kg' : '-' }}</td>
                         </tr>
                         <tr>
                             <th>Penyakit Bawaan</th>
                             <td>{{ $pendaftaran->penyakit_bawaan ?? 'Tidak ada' }}</td>
                         </tr>
                         <tr>
-                            <th>Tinggi Badan</th>
-                            <td>{{ $pendaftaran->tinggi ? $pendaftaran->tinggi . ' cm' : 'Tidak ada' }}</td>
+                            <th>Anak ke / Jumlah Saudara</th>
+                            <td>{{ $pendaftaran->anak_ke ?? '-' }} dari {{ $pendaftaran->jumlah_saudara ?? '-' }} bersaudara</td>
                         </tr>
                         <tr>
-                            <th>Berat Badan</th>
-                            <td>{{ $pendaftaran->berat_badan ? $pendaftaran->berat_badan . ' kg' : 'Tidak ada' }}</td>
+                            <th>Golongan Darah</th>
+                            <td>{{ $pendaftaran->golongan_darah ?? '-' }}</td>
                         </tr>
                         <tr>
-                            <th>Anak ke-/Jumlah Saudara</th>
-                            <td>{{ $pendaftaran->anak_ke ? $pendaftaran->anak_ke . ' dari ' . $pendaftaran->jumlah_saudara : 'Tidak ada' }}</td>
+                            <th>Nomor Hp</th>
+                            <td>{{ $pendaftaran->no_hp }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">2. DATA ALAMAT SISWA</div>
+                <table class="table table-bordered table-detail mb-4">
+                    <tbody>
+                        <tr>
+                            <th>Alamat Lengkap</th>
+                            <td>{{ $pendaftaran->alamat }}</td>
                         </tr>
                         <tr>
-                            <th>Nama Ayah</th>
-                            <td>{{ $pendaftaran->nama_ayah }}</td>
+                            <th>RT / RW</th>
+                            <td>{{ $pendaftaran->rt }} / {{ $pendaftaran->rw }}</td>
                         </tr>
                         <tr>
-                            <th>Pekerjaan Ayah</th>
-                            <td>{{ $pendaftaran->pekerjaan_ayah }}</td>
+                            <th>Provinsi</th>
+                            <td>{{ $pendaftaran->provinsi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kota / Kabupaten</th>
+                            <td>{{ $pendaftaran->kota }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kecamatan</th>
+                            <td>{{ $pendaftaran->kecamatan }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kelurahan / Desa</th>
+                            <td>{{ $pendaftaran->kelurahan }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kode Pos</th>
+                            <td>{{ $pendaftaran->kode_pos ?? '-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">3. DATA ORANG TUA / WALI</div>
+                <table class="table table-bordered table-detail mb-4">
+                    <tbody>
+                        <tr>
+                            <th>Nama Ayah / Pekerjaan</th>
+                            <td>{{ $pendaftaran->nama_ayah }} / {{ $pendaftaran->pekerjaan_ayah }}</td>
                         </tr>
                         <tr>
                             <th>Pendidikan Ayah</th>
                             <td>{{ $pendaftaran->pendidikan_ayah }}</td>
                         </tr>
                         <tr>
-                            <th>Nama Ibu</th>
-                            <td>{{ $pendaftaran->nama_ibu }}</td>
-                        </tr>
-                        <tr>
-                            <th>Pekerjaan Ibu</th>
-                            <td>{{ $pendaftaran->pekerjaan_ibu }}</td>
+                            <th>Nama Ibu / Pekerjaan</th>
+                            <td>{{ $pendaftaran->nama_ibu }} / {{ $pendaftaran->pekerjaan_ibu }}</td>
                         </tr>
                         <tr>
                             <th>Pendidikan Ibu</th>
                             <td>{{ $pendaftaran->pendidikan_ibu }}</td>
                         </tr>
                         <tr>
-                            <th>No. HP</th>
-                            <td>{{ $pendaftaran->no_hp }}</td>
-                        </tr>
-                        <tr>
-                            <th>No. WhatsApp</th>
+                            <th>Nomor HP</th>
                             <td>{{ $pendaftaran->no_whatsapp }}</td>
                         </tr>
                         <tr>
@@ -158,13 +194,19 @@
                             <th>Sumber Informasi</th>
                             <td>{{ $pendaftaran->sumber_informasi }}</td>
                         </tr>
+                    </tbody>
+                </table>
+
+                <div class="category-title">4. DOKUMEN & BUKTI PEMBAYARAN</div>
+                <table class="table table-bordered table-detail mb-4">
+                    <tbody>
                         <tr>
-                            <th>Akte</th>
+                            <th>Akte Kelahiran</th>
                             <td>
                                 @if ($pendaftaran->akte_path)
-                                    <a href="{{ Storage::url($pendaftaran->akte_path) }}" target="_blank" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-pdf"></i> Lihat Akte</a>
+                                    <a href="{{ Storage::url($pendaftaran->akte_path) }}" target="_blank" class="doc-link text-info"><i class="bi bi-file-earmark-pdf"></i> Lihat Akte</a>
                                 @else
-                                    <span class="text-danger">Akte tidak tersedia</span>
+                                    <span class="text-danger">File tidak tersedia</span>
                                 @endif
                             </td>
                         </tr>
@@ -172,28 +214,48 @@
                             <th>Kartu Keluarga</th>
                             <td>
                                 @if ($pendaftaran->kk_path)
-                                    <a href="{{ Storage::url($pendaftaran->kk_path) }}" target="_blank" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-pdf"></i> Lihat KK</a>
+                                    <a href="{{ Storage::url($pendaftaran->kk_path) }}" target="_blank" class="doc-link text-info"><i class="bi bi-file-earmark-pdf"></i> Lihat KK</a>
                                 @else
-                                    <span class="text-danger">KK tidak tersedia</span>
+                                    <span class="text-danger">File tidak tersedia</span>
                                 @endif
                             </td>
                         </tr>
                         <tr>
-                            <th>Mutasi</th>
+                            <th>Surat Mutasi (Pindahan)</th>
                             <td>
                                 @if ($pendaftaran->mutasi_path)
-                                    <a href="{{ Storage::url($pendaftaran->mutasi_path) }}" target="_blank" class="btn btn-info btn-sm"><i class="bi bi-file-earmark-pdf"></i> Lihat Mutasi</a>
+                                    <a href="{{ Storage::url($pendaftaran->mutasi_path) }}" target="_blank" class="doc-link text-info"><i class="bi bi-file-earmark-pdf"></i> Lihat Mutasi</a>
                                 @else
-                                    <span class="text-danger">Mutasi tidak tersedia</span>
+                                    <span class="text-muted">Tidak ada (Siswa Baru)</span>
+                                @endif
+                            </td>
+                        </tr>
+                        {{-- Penambahan Transkip 1 - 5 --}}
+                        @for($i = 1; $i <= 5; $i++)
+                        @php $transkip_field = 'transkip' . $i . '_path'; @endphp
+                        <tr>
+                            <th>Transkip {{ $i }}</th>
+                            <td>
+                                @if ($pendaftaran->$transkip_field)
+                                    <a href="{{ Storage::url($pendaftaran->$transkip_field) }}" target="_blank" class="doc-link text-info"><i class="bi bi-file-earmark-pdf"></i> Lihat Transkip {{ $i }}</a>
+                                @else
+                                    <span class="text-muted">File tidak tersedia</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endfor
+                        <tr>
+                            <th>Bukti Pembayaran</th>
+                            <td>
+                                @if ($pendaftaran->bukti_pembayaran_path)
+                                    <a href="{{ Storage::url($pendaftaran->bukti_pembayaran_path) }}" target="_blank" class="doc-link text-success"><i class="bi bi-check-circle"></i> Lihat Bukti Pembayaran</a>
+                                @else
+                                    <span class="text-danger">Belum mengunggah bukti</span>
                                 @endif
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="mt-3 action-buttons">
-                <a href="{{ route('admin.data-siswa') }}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
-                <a href="{{ route('admin.edit-siswa', $pendaftaran->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i> Edit</a>
             </div>
         </div>
     </div>
@@ -226,7 +288,6 @@
             });
         });
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

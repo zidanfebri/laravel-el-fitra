@@ -1,24 +1,76 @@
 /* General Styling */
 body {
-    font-family: 'Poppins', Arial, sans-serif;
+    font-family: 'Calibri', sans-serif;
+    font-size: 16px;
+    color: #374050;
     background-color: #f8f9fa;
-    color: #333;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Calibri', sans-serif;
+    font-weight: 700;
+    color: #374050;
+}
+
+a {
+    color: #28a745;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #218838;
+}
+
+/* Section */
+.section {
+    padding: 80px 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+.main-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.main-button:hover {
+    background-color: #fff;
+    color: #28a745;
+    border: 2px solid #28a745;
+    transform: translateY(-2px);
 }
 
 /* Navbar */
 .navbar {
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-bottom: 2px solid #000000;
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     max-width: 1350px;
     width: 100%;
     margin: 0 auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
 }
 
 /* Slider */
@@ -36,8 +88,7 @@ body {
     width: 310px;
     height: 183px;
     margin: 0 auto;
-    object-fit: none;
-    image-rendering: optimizeQuality;
+    object-fit: cover;
 }
 
 .slider-container .carousel-caption {
@@ -51,9 +102,19 @@ body {
 .slider-container .carousel-caption h1 {
     color: #fff;
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
+}
+
+.bg-parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(55, 64, 80, 0.6), rgba(121, 134, 150, 0.4));
+    z-index: 1;
 }
 
 /* Content Container */
@@ -70,7 +131,7 @@ body {
     margin-bottom: 3rem;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
@@ -79,48 +140,51 @@ body {
     height: 300px;
     border-radius: 8px;
     margin: 0 auto;
+    object-fit: cover;
 }
 
 .history-section .history-text h1 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #000000;
 }
 
 .history-section .history-text p {
     font-size: 1.1rem;
-    color: #333;
+    color: #6c757d;
 }
 
 /* Vision, Mission, and Target Lulusan */
 .vision-mission {
     margin-bottom: 3rem;
+    margin-left: 85px;
 }
 
 .vision-mission .card {
     border: 2px solid #000000;
-    border-radius: 8px;
+    border-radius: 15px;
     background-color: #fff;
     padding: 15px;
     height: 320px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .vision-mission .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .vision-mission h4 {
     font-size: 1.4rem;
-    color: #000000;
+    color: #374050;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .vision-mission p,
 .vision-mission ul {
     font-size: 1rem;
-    color: #333;
+    color: #6c757d;
 }
 
 /* Program Section */
@@ -131,8 +195,9 @@ body {
 
 .program-section h3 {
     font-size: 1.8rem;
-    color: #000000;
+    color: #374050;
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .program-section .program-container {
@@ -157,7 +222,7 @@ body {
 
 .program-section .card {
     border: 2px solid #000000;
-    border-radius: 8px;
+    border-radius: 15px;
     background-color: #fff;
     background-image: url('/images/program.jpeg');
     background-size: cover;
@@ -165,20 +230,15 @@ body {
     background-repeat: no-repeat;
     padding: 20px;
     height: 200px;
-    width: calc(70% - 10px); /* Dua kartu, masing-masing 50% lebar */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    width: calc(70% - 10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     text-align: center;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    box-sizing: border-box;
-}
-
-.program-section .card:hover {
-    transform: translateY(-5px);
 }
 
 .program-section .card::before {
@@ -197,9 +257,14 @@ body {
     z-index: 2;
 }
 
+.program-section .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
 .program-section .card i {
     font-size: 1.5rem;
-    color: #000000;
+    color: #374050;
     margin-bottom: 10px;
 }
 
@@ -211,14 +276,10 @@ body {
 
 .program-section .card p {
     font-size: 0.8rem;
-    color: #333;
+    color: #6c757d;
 }
 
 /* Facilities Section */
-.content-section {
-    margin-bottom: 3rem;
-}
-
 .fasilitas-card {
     position: relative;
     background-image: url('/images/daftar2.jpg');
@@ -227,7 +288,7 @@ body {
     background-repeat: no-repeat;
     border: 1px solid #000000;
     padding: 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     max-width: 1350px;
     width: 100%;
     height: 270px;
@@ -251,20 +312,21 @@ body {
 }
 
 .fasilitas-card h2 {
-    color: #000000;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
 }
 
 .fasilitas-card i {
     font-size: 2.5rem;
-    color: #ffffff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .fasilitas-card p {
-    color: #ffffff;
+    color: #fff;
     font-size: 0.9rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* Testimonial Section */
@@ -274,8 +336,9 @@ body {
 
 .testimonial-section h3 {
     font-size: 1.8rem;
-    color: #000000;
+    color: #374050;
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .testimoni-container {
@@ -296,16 +359,18 @@ body {
 
 .testimonial-section .card {
     border: 2px solid #000000;
-    border-radius: 8px;
+    border-radius: 15px;
     background-color: #fff;
     padding: 15px;
     height: 220px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
 .testimonial-section .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .testimonial-section .card img {
@@ -318,7 +383,7 @@ body {
 
 .testimonial-section .card p {
     font-size: 0.9rem;
-    color: #333;
+    color: #6c757d;
 }
 
 .testimonial-section .card h6 {
@@ -331,10 +396,12 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #000000;
+    background-color: #28a745;
     border: none;
     padding: 10px;
     border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
 }
 
 .testimonial-section .testimoni-prev {
@@ -347,17 +414,18 @@ body {
 
 .testimonial-section .testimoni-pagination .page-number {
     font-size: 1rem;
-    color: #ffffff;
-    background-color: #000000;
+    color: #fff;
+    background-color: #28a745;
     padding: 5px 10px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 .testimonial-section .testimoni-pagination .page-number.active {
-    font-weight: bold;
-    text-decoration: underline;
+    font-weight: 700;
+    background-color: #218838;
 }
 
 /* News Section */
@@ -368,8 +436,9 @@ body {
 
 .news-section h3 {
     font-size: 1.8rem;
-    color: #000000;
+    color: #374050;
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .news-container {
@@ -391,15 +460,16 @@ body {
 
 .news-item {
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     margin-left: 1px;
 }
 
 .news-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .news-item img {
@@ -410,13 +480,13 @@ body {
 
 .news-item h5 {
     font-size: 1.2rem;
-    color: #333;
+    color: #374050;
     margin: 10px 0;
 }
 
 .news-item p {
     font-size: 0.9rem;
-    color: #333;
+    color: #6c757d;
 }
 
 .news-prev,
@@ -424,10 +494,12 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #000000;
+    background-color: #28a745;
     border: none;
     padding: 10px;
     border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
 }
 
 .news-prev {
@@ -440,84 +512,135 @@ body {
 
 .news-pagination .page-number {
     font-size: 1rem;
-    color: #ffffff;
-    background-color: #000000;
+    color: #fff;
+    background-color: #28a745;
     padding: 5px 10px;
     margin: 0 5px;
     cursor: pointer;
     border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 .news-pagination .page-number.active {
-    font-weight: bold;
-    text-decoration: underline;
+    font-weight: 700;
+    background-color: #218838;
+}
+
+/* Registration Section */
+.registration-image {
+    position: relative;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/images/navbar.jpg');
+    display: flex;
+    align-items: center;
+    color: #374050;
+    text-align: center;
+}
+
+.registration-text {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.registration-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.registration-text a {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .vision-mission {
+        margin-left: 0;
+    }
+    .history-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .history-section img {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 991px) {
+    .section {
+        padding: 60px 0;
+    }
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    .program-section .card {
+        width: 100%;
+    }
+}
+
 @media (max-width: 768px) {
     .slider-container {
-        height: 183px;
+        height: 150px;
         margin-top: 60px;
     }
-
     .slider-container .carousel-item img {
-        width: 310px;
-        height: 183px;
-        margin: 0 auto;
-        object-fit: none;
-        image-rendering: optimizeQuality;
+        width: 250px;
+        height: 150px;
     }
-
     .slider-container .carousel-caption h1 {
         font-size: 1.5rem;
     }
-
-    .history-section {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     .history-section img {
-        width: 310px;
-        height: 183px;
-        margin-bottom: 1rem;
-        margin: 0 auto;
+        width: 250px;
+        height: 200px;
     }
-
     .history-section .history-text h1 {
         font-size: 1.5rem;
     }
-
-    .history-section .history-text p {
-        font-size: 1rem;
-    }
-
     .vision-mission .card {
         height: auto;
         margin-bottom: 1rem;
     }
-
     .program-section .card {
-        width: 100%; /* Satu kartu per baris di layar kecil */
-        height: 160px;
-        margin-bottom: 10px;
+        height: 180px;
     }
-
     .fasilitas-card {
         height: auto;
         padding: 1rem;
     }
-
     .fasilitas-card i {
         font-size: 2rem;
     }
-
     .fasilitas-card p {
         font-size: 0.8rem;
     }
-
     .testimonial-section .card {
         height: auto;
         margin-bottom: 1rem;
+    }
+    .registration-text h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    .program-section .card {
+        height: 150px;
+    }
+    .news-item img {
+        height: 120px;
+    }
+    .registration-text h2 {
+        font-size: 1.8rem;
     }
 }

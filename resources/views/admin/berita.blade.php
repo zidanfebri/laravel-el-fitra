@@ -9,6 +9,25 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
+    <!-- Toast Notification -->
+    @if (session('success'))
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast animate__animated animate__fadeInUp" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                <div class="toast-header">
+                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="{{ __('messages.site_name') }}" width="20" class="me-2">
+                    <strong class="me-auto">{{ __('messages.site_name') }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                    <div class="mt-2 text-end">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">{{ __('messages.ok') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Header -->
     <div class="header">
         <div class="user-info">
@@ -31,6 +50,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>{{ __('messages.data_siswa') }}</span></a></li>
             <li class="nav-item"><a class="nav-link active" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>{{ __('messages.berita') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>{{ __('messages.testimoni') }}</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.tahun-ajaran') }}"><i class="bi bi-calendar"></i><span>{{ __('messages.tahun_ajaran') }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>{{ __('messages.laporan') }}</span></a></li>
             <li class="nav-item text-center">
                 <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
@@ -41,43 +61,42 @@
     <!-- Content -->
     <div class="content">
         <h2 class="mb-4" id="contentTitle">{{ __('messages.manajemen_berita') }}</h2>
-        @if (session('success'))
-            <div class="alert alert-success" id="successAlert">{{ session('success') }}</div>
-        @endif
-        @if ($beritas->isEmpty())
-            <div class="alert alert-info">{{ __('messages.no_data') }}</div>
-        @else
-            <div class="table-container">
-                <div class="table-header-controls">
-                    <form method="GET" action="{{ route('admin.berita') }}" class="filter-form" id="filterForm">
-                        <div class="form-group">
-                            <label for="tanggal" class="form-label">{{ __('messages.filter_tanggal') }}</label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
-                        </div>
-                        <a href="{{ route('admin.berita') }}" class="btn btn-secondary">{{ __('messages.reset') }}</a>
-                    </form>
-                    <a href="{{ route('admin.create-berita') }}" class="btn btn-success add-button">{{ __('messages.tambah_berita') }}</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
+        <div class="table-container">
+            <div class="table-header-controls">
+                <form method="GET" action="{{ route('admin.berita') }}" class="filter-form" id="filterForm">
+                    <div class="form-group date-wrapper">
+                        <label for="tanggal" class="form-label">{{ __('messages.filter_tanggal') }}</label>
+                        <input type="date" class="form-control date-input" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
+                    </div>
+                    <a href="{{ route('admin.berita') }}" class="btn btn-secondary btn-sm">{{ __('messages.reset') }}</a>
+                </form>
+                <a href="{{ route('admin.create-berita') }}" class="btn btn-success add-button">{{ __('messages.tambah_berita') }}</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ __('messages.no') }}</th>
+                            <th>{{ __('messages.judul') }}</th>
+                            <th>{{ __('messages.deskripsi') }}</th>
+                            <th>{{ __('messages.tanggal_terbit') }}</th>
+                            <th>{{ __('messages.gambar') }}</th>
+                            <th>{{ __('messages.aksi') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($beritas->isEmpty())
                             <tr>
-                                <th>{{ __('messages.id') }}</th>
-                                <th>{{ __('messages.judul') }}</th>
-                                <th>{{ __('messages.deskripsi') }}</th>
-                                <th>{{ __('messages.tanggal_terbit') }}</th>
-                                <th>{{ __('messages.gambar') }}</th>
-                                <th>{{ __('messages.aksi') }}</th>
+                                <td colspan="6" class="text-center">{{ __('messages.no_data_berita') }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
+                        @else
                             @php $counter = ($beritas->currentPage() - 1) * $beritas->perPage() + 1; @endphp
                             @foreach ($beritas as $berita)
                                 <tr>
                                     <td>{{ $counter++ }}</td>
                                     <td>{{ $berita->judul }}</td>
                                     <td>{{ Str::limit($berita->deskripsi, 50) }}</td>
-                                    <td>{{ $berita->tanggal_terbit}}</td>
+                                    <td>{{ $berita->tanggal_terbit }}</td>
                                     <td>
                                         @if ($berita->gambar)
                                             <img src="{{ Storage::url($berita->gambar) }}" alt="{{ $berita->judul }}" class="table-img">
@@ -95,14 +114,16 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+                        @endif
+                    </tbody>
+                </table>
+                @if ($beritas->hasPages())
                     <div class="pagination-container">
                         {{ $beritas->links('pagination::bootstrap-5') }}
                     </div>
-                </div>
+                @endif
             </div>
-        @endif
+        </div>
     </div>
 
     <script>
@@ -136,18 +157,43 @@
                 }
             });
 
-            const successAlert = document.getElementById('successAlert');
-            if (successAlert) {
-                setTimeout(() => {
-                    successAlert.style.display = 'none';
-                }, 3000);
+            const toastEl = document.querySelector('.toast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        toast.hide();
+                    }
+                });
             }
 
             const filterForm = document.getElementById('filterForm');
             const tanggalInput = document.getElementById('tanggal');
+            const dateIcon = document.querySelector('.date-icon');
+
             if (tanggalInput) {
+                tanggalInput.addEventListener('focus', function() {
+                    try {
+                        this.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+
                 tanggalInput.addEventListener('change', function() {
                     filterForm.submit();
+                });
+            }
+
+            if (dateIcon) {
+                dateIcon.addEventListener('click', function() {
+                    try {
+                        tanggalInput.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
                 });
             }
         });

@@ -9,6 +9,25 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
+    <!-- Toast Notification -->
+    @if (session('success'))
+        <div class="toast-container">
+            <div class="toast animate__animated animate__fadeInUp" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                <div class="toast-header">
+                    <img src="{{ asset('images/elfitra.jpeg') }}" alt="Elfitra Logo" width="20" class="me-2">
+                    <strong class="me-auto">El-Fitra</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                    <div class="mt-2 text-end">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Header -->
     <div class="header">
         <div class="user-info">
@@ -31,6 +50,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.data-siswa') }}"><i class="bi bi-people"></i><span>Data Calon Siswa</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.berita') }}"><i class="bi bi-newspaper"></i><span>Berita</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.testimoni') }}"><i class="bi bi-chat"></i><span>Testimoni</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.tahun-ajaran') }}"><i class="bi bi-calendar"></i><span>Tahun Ajaran</span></a></li>
             <li class="nav-item"><a class="nav-link active" href="{{ route('admin.laporan') }}"><i class="bi bi-file-text"></i><span>Laporan</span></a></li>
             <li class="nav-item text-center">
                 <a href="#" class="nav-link toggle-btn" id="toggleSidebar"><i class="bi bi-arrow-left-circle"></i></a>
@@ -41,18 +61,13 @@
     <!-- Content -->
     <div class="content">
         <h2 class="mb-4" id="contentTitle">Laporan Data Siswa</h2>
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
         <div class="form-container">
             <form method="GET" action="{{ route('admin.laporan') }}" class="mb-4">
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="jenjang" class="form-label">Jenjang</label>
                         <div class="select-wrapper">
-                            <select class="form-control custom-select" id="jenjang" name="jenjang">
+                            <select class="form-control custom-select" id="jenjang" name="jenjang" onchange="this.form.submit()">
                                 <option value="">Semua Jenjang</option>
                                 <option value="TK" {{ $jenjang === 'TK' ? 'selected' : '' }}>TK</option>
                                 <option value="SD" {{ $jenjang === 'SD' ? 'selected' : '' }}>SD</option>
@@ -62,20 +77,20 @@
                             <i class="bi bi-chevron-down select-icon"></i>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 date-wrapper">
                         <label for="tanggal_awal" class="form-label">Tanggal Awal</label>
-                        <input type="date" class="form-control" id="tanggal_awal" name="tanggal_awal" value="{{ $tanggalAwal }}">
+                        <input type="date" class="form-control date-input" id="tanggal_awal" name="tanggal_awal" value="{{ $tanggalAwal ?? '' }}" onchange="this.form.submit()">
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 date-wrapper">
                         <label for="tanggal_akhir" class="form-label">Tanggal Akhir</label>
-                        <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{ $tanggalAkhir }}">
+                        <input type="date" class="form-control date-input" id="tanggal_akhir" name="tanggal_akhir" value="{{ $tanggalAkhir ?? '' }}" onchange="this.form.submit()">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm">Filter</button>
-                <a href="{{ route('admin.laporan') }}" class="btn btn-secondary btn-sm">Reset</a>
                 @if ($pendaftarans->isNotEmpty())
-                    <a href="{{ route('admin.laporan', ['jenjang' => $jenjang, 'tanggal_awal' => $tanggalAwal, 'tanggal_akhir' => $tanggalAkhir, 'download' => 'pdf']) }}" class="btn btn-danger btn-sm">Download PDF</a>
-                    <a href="{{ route('admin.laporan', ['jenjang' => $jenjang, 'tanggal_awal' => $tanggalAwal, 'tanggal_akhir' => $tanggalAkhir, 'download' => 'excel']) }}" class="btn btn-success btn-sm">Download Excel</a>
+                    <div class="btn-group">
+                        <a href="{{ route('admin.laporan', ['jenjang' => $jenjang, 'tanggal_awal' => $tanggalAwal, 'tanggal_akhir' => $tanggalAkhir, 'download' => 'pdf']) }}" class="btn btn-danger btn-sm">Download PDF</a>
+                        <a href="{{ route('admin.laporan', ['jenjang' => $jenjang, 'tanggal_awal' => $tanggalAwal, 'tanggal_akhir' => $tanggalAkhir, 'download' => 'excel']) }}" class="btn btn-success btn-sm">Download Excel</a>
+                    </div>
                 @endif
             </form>
 
@@ -127,8 +142,12 @@
                 sidebar.classList.toggle('collapsed');
                 content.classList.toggle('collapsed');
                 header.classList.toggle('collapsed');
-                formContainer.classList.toggle('collapsed');
-                contentTitle.classList.toggle('collapsed');
+                if (formContainer) {
+                    formContainer.classList.toggle('collapsed');
+                }
+                if (contentTitle) {
+                    contentTitle.classList.toggle('collapsed');
+                }
 
                 const icon = this.querySelector('i');
                 if (sidebar.classList.contains('collapsed')) {
@@ -140,18 +159,51 @@
                 }
             });
 
-            const tanggalAwalInput = document.getElementById('tanggal_awal');
-            tanggalAwalInput.addEventListener('focus', function() {
-                if (typeof this.showPicker === 'function') {
-                    this.showPicker();
-                }
-            });
+            const toastEl = document.querySelector('.toast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
 
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        toast.hide();
+                    }
+                });
+            }
+
+            const tanggalAwalInput = document.getElementById('tanggal_awal');
             const tanggalAkhirInput = document.getElementById('tanggal_akhir');
-            tanggalAkhirInput.addEventListener('focus', function() {
-                if (typeof this.showPicker === 'function') {
-                    this.showPicker();
-                }
+            const dateIcons = document.querySelectorAll('.date-icon');
+
+            if (tanggalAwalInput) {
+                tanggalAwalInput.addEventListener('focus', function() {
+                    try {
+                        this.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
+
+            if (tanggalAkhirInput) {
+                tanggalAkhirInput.addEventListener('focus', function() {
+                    try {
+                        this.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
+            }
+
+            dateIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.parentElement.querySelector('.date-input');
+                    try {
+                        input.showPicker();
+                    } catch (e) {
+                        console.log('showPicker not supported:', e);
+                    }
+                });
             });
         });
     </script>

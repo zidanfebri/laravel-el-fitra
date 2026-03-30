@@ -15,26 +15,25 @@
 
     @section('content')
         <div class="container-fluid p-0">
-            <!-- News Detail Section -->
-            <div class="content-section" id="berita-detail">
-                <div class="row animate__animated animate__fadeInUp">
-                    <div class="col-12">
-                        <div class="news-detail-container">
-                            <h1 class="news-detail-title">
+            <div class="content-section py-5" id="article-detail">
+                <div class="row justify-content-center animate__animated animate__fadeInUp">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <div class="article-detail-card">
+                            <h1 class="article-detail-title">
                                 {{ app()->getLocale() === 'en' && $berita->judul_en ? $berita->judul_en : $berita->judul }}
                             </h1>
-                            <p class="news-detail-date text-muted">
-                                {{ $berita->tanggal_terbit}}
+                            <p class="article-detail-date">
+                                <i class="bi bi-calendar-date"></i> {{ $berita->tanggal_terbit }}
                             </p>
                             @if ($berita->gambar)
-                                <img src="{{ Storage::url($berita->gambar) }}" alt="{{ app()->getLocale() === 'en' && $berita->judul_en ? $berita->judul_en : $berita->judul }}" class="img-fluid rounded news-detail-image" loading="lazy">
+                                <img src="{{ Storage::url($berita->gambar) }}" alt="{{ app()->getLocale() === 'en' && $berita->judul_en ? $berita->judul_en : $berita->judul }}" class="article-detail-image" loading="lazy">
                             @else
-                                <img src="{{ asset('images/placeholder.jpg') }}" alt="{{ __('messages.no_image') }}" class="img-fluid rounded news-detail-image" loading="lazy">
+                                <img src="{{ asset('images/placeholder.jpg') }}" alt="{{ __('messages.no_image') }}" class="article-detail-image" loading="lazy">
                             @endif
-                            <div class="news-detail-content">
+                            <div class="article-detail-content">
                                 {!! app()->getLocale() === 'en' && $berita->deskripsi_en ? nl2br(e($berita->deskripsi_en)) : nl2br(e($berita->deskripsi)) !!}
                             </div>
-                            <a href="{{ route('home') }}" class="btn btn-success mt-3">{{ __('messages.kembali') }}</a>
+                            <a href="{{ route('home') }}" class="article-back-button mt-4">{{ __('messages.kembali') }}</a>
                         </div>
                     </div>
                 </div>

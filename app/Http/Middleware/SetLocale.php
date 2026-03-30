@@ -15,18 +15,17 @@ class SetLocale
         // Daftar locale yang valid
         $validLocales = ['id', 'en'];
         
-        // Ambil locale dari session, default ke 'id'
-        $locale = Session::get('locale', 'id');
+        // AMBIL DARI SESSION, JIKA KOSONG GUNAKAN DEFAULT DARI config/app.php (yang sudah Anda ganti ke 'en')
+        $locale = Session::get('locale', config('app.locale'));
         
-        // Validasi locale
+        // Validasi locale: Jika tidak valid, paksa ke 'en'
         if (!in_array($locale, $validLocales)) {
-            $locale = 'id';
+            $locale = 'en'; // Ubah default fallback di sini menjadi en
             Session::put('locale', $locale);
         }
         
         Log::info('SetLocale middleware: Locale saat ini adalah ' . $locale);
         App::setLocale($locale);
-        Log::info('SetLocale middleware: App locale setelah diset adalah ' . App::getLocale()); // Debugging tambahan
         
         return $next($request);
     }
